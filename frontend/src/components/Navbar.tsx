@@ -1,5 +1,5 @@
 import React from 'react';
-import { Sparkles, Brain, LayoutDashboard, History, BarChart3, PlusCircle } from 'lucide-react';
+import { Brain, LayoutDashboard, History, BarChart3, PlusCircle, Layers } from 'lucide-react';
 import { Brand } from '../types';
 
 interface NavbarProps {
@@ -20,79 +20,81 @@ export const Navbar: React.FC<NavbarProps> = ({
   onOpenPostModal
 }) => {
   return (
-    <header className="sticky top-0 z-40 w-full border-b border-slate-800/80 bg-slate-950/80 backdrop-blur-md">
+    <header className="sticky top-0 z-40 w-full border-b border-[#202020] bg-[#0A0A0A]/95 backdrop-blur-md">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16">
-          {/* Brand Logo & Tag */}
-          <div className="flex items-center gap-3">
-            <div className="h-10 w-10 rounded-xl bg-gradient-to-tr from-sky-500 to-pink-500 p-0.5 shadow-lg shadow-sky-500/20 flex items-center justify-center">
-              <div className="h-full w-full bg-slate-950 rounded-[10px] flex items-center justify-center">
-                <Sparkles className="w-5 h-5 text-sky-400" />
-              </div>
+        <div className="flex items-center justify-between h-14 gap-4">
+          {/* Brand Logo & Title */}
+          <div className="flex items-center gap-3 shrink-0">
+            <div className="h-8 w-8 rounded-lg bg-neutral-900 border border-neutral-800 flex items-center justify-center">
+              <Layers className="w-4 h-4 text-white" />
             </div>
             <div>
               <div className="flex items-center gap-2">
-                <span className="text-lg font-bold tracking-tight text-white">SocialPulse</span>
-                <span className="text-xs px-2 py-0.5 rounded-full bg-sky-500/10 border border-sky-500/30 text-sky-400 font-semibold tracking-wide">
-                  ENGAGEMENT AGENT
+                <span className="text-sm sm:text-base font-bold tracking-tight text-white">SocialPulse</span>
+                <span className="text-[10px] px-1.5 py-0.5 rounded bg-neutral-900 border border-neutral-800 text-neutral-400 font-mono tracking-wider uppercase">
+                  AGENT
                 </span>
               </div>
-              <p className="text-[11px] text-slate-400 flex items-center gap-1 font-mono">
-                Powered by <span className="text-sky-300 font-medium">Hindsight</span> Persistent Memory
+              <p className="text-[10px] text-neutral-400 hidden sm:flex items-center gap-1 font-mono">
+                <Brain className="w-3 h-3 text-neutral-400" />
+                <span>Hindsight Memory Active</span>
               </p>
             </div>
           </div>
 
-          {/* Navigation Tabs */}
-          <nav className="hidden md:flex items-center gap-1 bg-slate-900/90 p-1 rounded-xl border border-slate-800">
+          {/* Desktop Navigation Tabs — Minimal Monochrome */}
+          <nav className="hidden md:flex items-center gap-1 bg-[#121212] p-1 rounded-xl border border-[#222222]">
             <button
               onClick={() => setActiveTab('dashboard')}
-              className={`flex items-center gap-2 px-3.5 py-1.5 rounded-lg text-sm font-medium transition-all ${
+              className={`flex items-center gap-2 px-3.5 py-1.5 rounded-lg text-xs transition-all ${
                 activeTab === 'dashboard'
-                  ? 'bg-sky-500 text-slate-950 shadow-md font-semibold'
-                  : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/50'
+                  ? 'bg-neutral-800 text-white font-semibold border border-neutral-700'
+                  : 'text-neutral-400 hover:text-neutral-200 hover:bg-neutral-900'
               }`}
             >
-              <LayoutDashboard className="w-4 h-4" />
+              <LayoutDashboard className="w-3.5 h-3.5" />
               Dashboard
             </button>
+
             <button
               onClick={() => setActiveTab('history')}
-              className={`flex items-center gap-2 px-3.5 py-1.5 rounded-lg text-sm font-medium transition-all ${
+              className={`flex items-center gap-2 px-3.5 py-1.5 rounded-lg text-xs transition-all ${
                 activeTab === 'history'
-                  ? 'bg-sky-500 text-slate-950 shadow-md font-semibold'
-                  : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/50'
+                  ? 'bg-neutral-800 text-white font-semibold border border-neutral-700'
+                  : 'text-neutral-400 hover:text-neutral-200 hover:bg-neutral-900'
               }`}
             >
-              <History className="w-4 h-4" />
+              <History className="w-3.5 h-3.5" />
               Post History
             </button>
+
             <button
               onClick={() => setActiveTab('analysis')}
-              className={`flex items-center gap-2 px-3.5 py-1.5 rounded-lg text-sm font-medium transition-all ${
+              className={`flex items-center gap-2 px-3.5 py-1.5 rounded-lg text-xs transition-all ${
                 activeTab === 'analysis'
-                  ? 'bg-sky-500 text-slate-950 shadow-md font-semibold'
-                  : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/50'
+                  ? 'bg-neutral-800 text-white font-semibold border border-neutral-700'
+                  : 'text-neutral-400 hover:text-neutral-200 hover:bg-neutral-900'
               }`}
             >
-              <BarChart3 className="w-4 h-4" />
+              <BarChart3 className="w-3.5 h-3.5" />
               Engagement Intelligence
             </button>
+
             <button
               onClick={() => setActiveTab('memory')}
-              className={`flex items-center gap-2 px-3.5 py-1.5 rounded-lg text-sm font-medium transition-all ${
+              className={`flex items-center gap-2 px-3.5 py-1.5 rounded-lg text-xs transition-all ${
                 activeTab === 'memory'
-                  ? 'bg-sky-500 text-slate-950 shadow-md font-semibold'
-                  : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/50'
+                  ? 'bg-neutral-800 text-white font-semibold border border-neutral-700'
+                  : 'text-neutral-400 hover:text-neutral-200 hover:bg-neutral-900'
               }`}
             >
-              <Brain className="w-4 h-4 text-pink-400" />
+              <Brain className="w-3.5 h-3.5" />
               Memory Center
             </button>
           </nav>
 
-          {/* Right Action: Brand Selector & New Post Button */}
-          <div className="flex items-center gap-3">
+          {/* Right Controls: Brand Selector & Primary Action */}
+          <div className="flex items-center gap-2.5">
             {brands.length > 0 && selectedBrand && (
               <div className="relative">
                 <select
@@ -101,7 +103,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                     const found = brands.find((b) => b.id === Number(e.target.value));
                     if (found) onSelectBrand(found);
                   }}
-                  className="bg-slate-900 border border-slate-800 text-slate-200 text-xs rounded-lg px-3 py-2 focus:ring-1 focus:ring-sky-500 outline-none font-medium cursor-pointer"
+                  className="bg-[#121212] border border-[#252525] text-neutral-300 text-xs rounded-xl px-2.5 py-1.5 focus:border-neutral-500 outline-none font-medium cursor-pointer max-w-[130px] sm:max-w-[190px] truncate"
                 >
                   {brands.map((b) => (
                     <option key={b.id} value={b.id}>
@@ -114,12 +116,64 @@ export const Navbar: React.FC<NavbarProps> = ({
 
             <button
               onClick={onOpenPostModal}
-              className="flex items-center gap-2 bg-gradient-to-r from-sky-500 to-sky-600 hover:from-sky-400 hover:to-sky-500 text-slate-950 px-3.5 py-2 rounded-lg text-xs font-bold transition-all shadow-md shadow-sky-500/20 active:scale-95"
+              className="flex items-center gap-1.5 bg-neutral-100 hover:bg-white text-neutral-950 px-3 py-1.5 sm:px-3.5 sm:py-1.5 rounded-xl text-xs font-bold transition-all shrink-0 active:scale-95"
             >
-              <PlusCircle className="w-4 h-4 text-slate-950" />
-              <span>Add Post & Feedback</span>
+              <PlusCircle className="w-3.5 h-3.5 text-neutral-950" />
+              <span className="hidden xs:inline">Add Post & Feedback</span>
+              <span className="xs:hidden">+ Post</span>
             </button>
           </div>
+        </div>
+
+        {/* Mobile Navigation Tabs — Minimal Monochrome */}
+        <div className="flex md:hidden items-center justify-around border-t border-[#202020] py-2 gap-1 overflow-x-auto">
+          <button
+            onClick={() => setActiveTab('dashboard')}
+            className={`flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs whitespace-nowrap transition-all ${
+              activeTab === 'dashboard'
+                ? 'bg-neutral-800 text-white font-semibold border border-neutral-700'
+                : 'text-neutral-400 hover:text-white'
+            }`}
+          >
+            <LayoutDashboard className="w-3.5 h-3.5" />
+            Dashboard
+          </button>
+
+          <button
+            onClick={() => setActiveTab('history')}
+            className={`flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs whitespace-nowrap transition-all ${
+              activeTab === 'history'
+                ? 'bg-neutral-800 text-white font-semibold border border-neutral-700'
+                : 'text-neutral-400 hover:text-white'
+            }`}
+          >
+            <History className="w-3.5 h-3.5" />
+            History
+          </button>
+
+          <button
+            onClick={() => setActiveTab('analysis')}
+            className={`flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs whitespace-nowrap transition-all ${
+              activeTab === 'analysis'
+                ? 'bg-neutral-800 text-white font-semibold border border-neutral-700'
+                : 'text-neutral-400 hover:text-white'
+            }`}
+          >
+            <BarChart3 className="w-3.5 h-3.5" />
+            Intelligence
+          </button>
+
+          <button
+            onClick={() => setActiveTab('memory')}
+            className={`flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs whitespace-nowrap transition-all ${
+              activeTab === 'memory'
+                ? 'bg-neutral-800 text-white font-semibold border border-neutral-700'
+                : 'text-neutral-400 hover:text-white'
+            }`}
+          >
+            <Brain className="w-3.5 h-3.5" />
+            Memory
+          </button>
         </div>
       </div>
     </header>

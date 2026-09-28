@@ -16,40 +16,28 @@ export const StatCard: React.FC<StatCardProps> = ({
   subtitle,
   icon: Icon,
   badge,
-  accent = 'blue'
 }) => {
-  const accentClasses = {
-    blue: {
-      bg: 'bg-sky-500/10 border-sky-500/20 text-sky-400',
-      glow: 'group-hover:border-sky-500/40'
-    },
-    pink: {
-      bg: 'bg-pink-500/10 border-pink-500/20 text-pink-400',
-      glow: 'group-hover:border-pink-500/40'
-    },
-    emerald: {
-      bg: 'bg-emerald-500/10 border-emerald-500/20 text-emerald-400',
-      glow: 'group-hover:border-emerald-500/40'
-    }
-  }[accent];
-
   return (
-    <div className={`group bg-slate-900/60 border border-slate-800/80 rounded-2xl p-5 hover:bg-slate-900/90 transition-all ${accentClasses.glow}`}>
+    <div className="bg-[#101010] border border-[#252525] hover:border-[#383838] rounded-2xl p-5 sm:p-6 transition-all duration-200">
       <div className="flex items-center justify-between mb-3">
-        <span className="text-xs font-semibold uppercase tracking-wider text-slate-400">{title}</span>
-        <div className={`p-2 rounded-xl border ${accentClasses.bg}`}>
-          <Icon className="w-4 h-4" />
+        <span className="text-[10px] sm:text-[11px] font-mono uppercase tracking-[0.12em] text-neutral-400 font-medium">
+          {title}
+        </span>
+        <div className="h-9 w-9 rounded-xl bg-neutral-900 border border-neutral-800 flex items-center justify-center shrink-0">
+          <Icon className="w-4 h-4 text-neutral-300" />
         </div>
       </div>
-      <div className="flex items-baseline gap-2">
-        <span className="text-2xl font-extrabold text-white tracking-tight">{value}</span>
+
+      <div className="flex items-baseline gap-2 flex-wrap">
+        <span className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">{value}</span>
         {badge && (
-          <span className="text-[11px] px-2 py-0.5 rounded-full bg-slate-800 text-slate-300 font-medium border border-slate-700">
+          <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-neutral-900 text-neutral-300 border border-neutral-800">
             {badge}
           </span>
         )}
       </div>
-      {subtitle && <p className="text-xs text-slate-400 mt-1">{subtitle}</p>}
+
+      {subtitle && <p className="text-xs text-neutral-400 mt-1.5 font-normal leading-normal">{subtitle}</p>}
     </div>
   );
 };

@@ -8,14 +8,18 @@ export default {
   theme: {
     extend: {
       colors: {
-        brand: {
-          dark: '#0B0F19',
-          card: '#111827',
-          surface: '#1E293B',
-          border: '#334155',
-          accent: '#38BDF8',
-          pink: '#F472B6',
-          pinkLight: '#FDF2F8'
+        mono: {
+          bg: '#050505',
+          main: '#080808',
+          surface: '#101010',
+          card: '#141414',
+          elevated: '#181818',
+          border: '#252525',
+          borderLight: '#2E2E2E',
+          textPrimary: '#F5F5F5',
+          textSecondary: '#B3B3B3',
+          textMuted: '#737373',
+          textSubtle: '#555555'
         }
       }
     },

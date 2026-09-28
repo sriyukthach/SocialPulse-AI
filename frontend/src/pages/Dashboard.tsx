@@ -1,5 +1,5 @@
 import React from 'react';
-import { BarChart3, TrendingUp, Users, Target, FileText, Brain, ArrowUpRight, PlusCircle, CheckCircle2, Info } from 'lucide-react';
+import { BarChart3, TrendingUp, Target, FileText, Brain, PlusCircle, Sparkles, ArrowRight } from 'lucide-react';
 import { BrandDashboardStats, Brand } from '../types';
 import { StatCard } from '../components/StatCard';
 import { PostCard } from '../components/PostCard';
@@ -19,106 +19,143 @@ export const Dashboard: React.FC<DashboardProps> = ({
 }) => {
   if (!stats || !brand) {
     return (
-      <div className="flex items-center justify-center min-h-[400px]">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-sky-400"></div>
+      <div className="flex flex-col items-center justify-center min-h-[400px] gap-3">
+        <div className="animate-spin rounded-full h-7 w-7 border-b-2 border-neutral-300"></div>
+        <p className="text-xs text-neutral-500 font-mono">Loading brand dashboard & Hindsight memory stats...</p>
       </div>
     );
   }
 
   return (
-    <div className="space-y-8 animate-in fade-in duration-500">
-      {/* Brand Hero Banner */}
-      <div className="relative overflow-hidden rounded-3xl bg-gradient-to-r from-slate-900 via-slate-900/90 to-sky-950/40 border border-slate-800 p-6 sm:p-8 shadow-2xl">
-        <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
-          <div className="space-y-2 max-w-2xl">
-            <div className="flex flex-wrap items-center gap-2">
-              <span className="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-sky-500/10 border border-sky-500/30 text-sky-400">
-                {brand.industry}
-              </span>
-              <span className="text-xs font-mono text-slate-400">
-                Memory Bank: <strong className="text-sky-300">"{brand.slug}"</strong>
-              </span>
-              <span className="text-[10px] font-mono px-2 py-0.5 rounded-md bg-pink-500/10 border border-pink-500/20 text-pink-400 flex items-center gap-1">
-                <Info className="w-3 h-3" />
-                Fictional Demonstration Data
+    <div className="space-y-8 sm:space-y-10 animate-in fade-in duration-300">
+      {/* 1. HERO PANEL — Editorial Dark Monochrome */}
+      <div className="bg-[#101010] border border-[#252525] rounded-3xl p-6 sm:p-8">
+        <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
+          {/* Left Content */}
+          <div className="space-y-3 max-w-2xl">
+            {/* Context Metadata Line */}
+            <div className="text-[10px] sm:text-[11px] font-mono tracking-[0.15em] uppercase text-neutral-400 flex items-center gap-2 flex-wrap">
+              <span className="font-semibold text-neutral-200">{brand.industry}</span>
+              <span className="text-neutral-600">•</span>
+              <span className="flex items-center gap-1.5 text-neutral-300">
+                <Brain className="w-3.5 h-3.5 text-neutral-400" />
+                HINDSIGHT MEMORY BANK: "{brand.slug.toUpperCase()}"
               </span>
             </div>
-            <h1 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
+
+            {/* Main Title */}
+            <h1 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
               {brand.name}
             </h1>
-            <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
-              <strong className="text-slate-200">Target Audience:</strong> {brand.audience_description}
-            </p>
-            <p className="text-xs sm:text-sm text-slate-400">
-              <strong className="text-slate-300">Goal:</strong> {brand.content_goal}
-            </p>
+
+            {/* Supporting Content */}
+            <div className="space-y-1.5 text-xs sm:text-sm text-neutral-400 leading-relaxed font-normal">
+              <p>
+                <strong className="text-neutral-200 font-semibold">Target Audience:</strong> {brand.audience_description}
+              </p>
+              <p>
+                <strong className="text-neutral-200 font-semibold">Core Content Goal:</strong> {brand.content_goal}
+              </p>
+            </div>
           </div>
 
-          <div className="flex flex-col sm:flex-row gap-3">
+          {/* Right-Side Action Area — Monochrome CTAs */}
+          <div className="flex flex-col sm:flex-row lg:flex-col xl:flex-row gap-3 shrink-0">
+            {/* Primary CTA: Premium White Button */}
             <button
               onClick={onNavigateToAnalysis}
-              className="flex items-center justify-center gap-2 bg-gradient-to-r from-sky-500 to-sky-600 hover:from-sky-400 hover:to-sky-500 text-slate-950 font-bold px-5 py-3 rounded-xl text-xs sm:text-sm transition-all shadow-lg shadow-sky-500/20 active:scale-95"
+              className="flex items-center justify-center gap-2 bg-[#F5F5F5] hover:bg-white text-[#080808] font-bold px-5.5 py-3 rounded-xl text-xs sm:text-sm transition-all whitespace-nowrap active:scale-95 shadow-sm"
             >
-              <BarChart3 className="w-4 h-4" />
-              View Engagement Intelligence
+              <BarChart3 className="w-4 h-4 text-[#080808]" />
+              <span>View Engagement Intelligence</span>
             </button>
+
+            {/* Secondary CTA: Dark Outline Button */}
             <button
               onClick={onOpenPostModal}
-              className="flex items-center justify-center gap-2 bg-slate-800 hover:bg-slate-700 text-slate-200 font-semibold px-4 py-3 rounded-xl text-xs sm:text-sm border border-slate-700 transition-all"
+              className="flex items-center justify-center gap-2 bg-transparent border border-[#333333] hover:bg-[#171717] text-[#E5E5E5] font-semibold px-4.5 py-3 rounded-xl text-xs sm:text-sm transition-all whitespace-nowrap"
             >
-              <PlusCircle className="w-4 h-4" />
-              Add Post & Feedback
+              <PlusCircle className="w-4 h-4 text-neutral-400" />
+              <span>Add Post & Feedback</span>
             </button>
           </div>
         </div>
       </div>
 
-      {/* KPI Stats Row */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        <StatCard
-          title="Avg Engagement Rate"
-          value={`${stats.average_engagement_rate}%`}
-          subtitle="Calculated across recorded posts"
-          icon={TrendingUp}
-          accent="emerald"
-        />
-        <StatCard
-          title="Top Performing Format"
-          value={stats.top_performing_format}
-          subtitle="Highest average saves & comments"
-          icon={Target}
-          accent="blue"
-        />
-        <StatCard
-          title="Total Recorded Posts"
-          value={stats.total_posts}
-          subtitle={`${stats.total_likes} likes, ${stats.total_comments} comments`}
-          icon={FileText}
-          accent="blue"
-        />
-        <StatCard
-          title="Hindsight Memories"
-          value={stats.recent_memories_count}
-          subtitle="Cross-session persistent insights"
-          icon={Brain}
-          accent="pink"
-        />
+      {/* 2. KPI / METRIC CARDS GRID */}
+      <div className="space-y-3">
+        <h2 className="text-[10px] sm:text-[11px] font-mono uppercase tracking-[0.15em] text-neutral-400 font-semibold">
+          Performance Baseline & Memory Stats
+        </h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5">
+          <StatCard
+            title="AVG ENGAGEMENT RATE"
+            value={`${stats.average_engagement_rate}%`}
+            subtitle="Calculated across recorded posts"
+            icon={TrendingUp}
+          />
+          <StatCard
+            title="TOP PERFORMING FORMAT"
+            value={stats.top_performing_format}
+            subtitle="Highest save & comment volume"
+            icon={Target}
+          />
+          <StatCard
+            title="TOTAL RECORDED POSTS"
+            value={stats.total_posts}
+            subtitle={`${stats.total_likes} likes, ${stats.total_comments} comments`}
+            icon={FileText}
+          />
+          <StatCard
+            title="HINDSIGHT MEMORIES"
+            value={stats.recent_memories_count}
+            subtitle="Persistent cross-session facts"
+            icon={Brain}
+          />
+        </div>
       </div>
 
-      {/* Recent Posts Section */}
+      {/* 3. AGENT LEARNING SPOTLIGHT */}
+      <div className="bg-[#101010] border border-[#252525] rounded-2xl p-5 sm:p-6">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div className="space-y-1.5 max-w-3xl">
+            <div className="flex items-center gap-2">
+              <div className="h-7 w-7 rounded-xl bg-neutral-900 border border-neutral-800 flex items-center justify-center shrink-0">
+                <Sparkles className="w-3.5 h-3.5 text-white" />
+              </div>
+              <span className="text-[10px] font-mono font-bold text-neutral-300 uppercase tracking-[0.12em]">
+                HINDSIGHT PERSISTENT MEMORY TAKEAWAY
+              </span>
+            </div>
+            <p className="text-xs sm:text-sm text-neutral-300 leading-relaxed font-normal">
+              SocialPulse AI continuously learns from audience reactions. For <strong>{brand.name}</strong>, educational routine breakdowns and mistimed cleansers generate <strong>10x higher saves & shares</strong> than standalone discount sales banners.
+            </p>
+          </div>
+
+          <button
+            onClick={onNavigateToAnalysis}
+            className="flex items-center gap-1.5 text-xs font-semibold text-white bg-neutral-900 border border-neutral-800 hover:border-neutral-700 px-4 py-2.5 rounded-xl shrink-0 transition-all"
+          >
+            <span>Explore Intelligence</span>
+            <ArrowRight className="w-3.5 h-3.5 text-neutral-400" />
+          </button>
+        </div>
+      </div>
+
+      {/* 4. RECENT POSTS & FEEDBACK FEED */}
       <div className="space-y-4">
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-between flex-wrap gap-2">
           <div>
             <h2 className="text-lg font-bold text-white tracking-tight">Recent Posts & Feedback</h2>
-            <p className="text-xs text-slate-400">
-              Posts saved to SQLite and automatically indexed into Hindsight persistent memory.
+            <p className="text-xs text-neutral-400">
+              Post performance saved in SQLite and retained in Hindsight persistent memory bank <strong className="text-neutral-200 font-mono">"{brand.slug}"</strong>.
             </p>
           </div>
           <button
             onClick={onOpenPostModal}
-            className="text-xs font-semibold text-sky-400 hover:text-sky-300 flex items-center gap-1"
+            className="text-xs font-semibold text-neutral-300 hover:text-white flex items-center gap-1 bg-neutral-900 border border-neutral-800 px-3 py-1.5 rounded-xl hover:border-neutral-700 transition-all"
           >
-            <span>+ Add new post</span>
+            <span>+ Add New Post</span>
           </button>
         </div>
 

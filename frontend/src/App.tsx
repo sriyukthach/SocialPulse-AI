@@ -7,7 +7,6 @@ import { Dashboard } from './pages/Dashboard';
 import { PostHistory } from './pages/PostHistory';
 import { EngagementAnalysis } from './pages/EngagementAnalysis';
 import { MemoryCenter } from './pages/MemoryCenter';
-import { Brain } from 'lucide-react';
 
 export const App: React.FC = () => {
   const [brands, setBrands] = useState<Brand[]>([]);
@@ -63,24 +62,21 @@ export const App: React.FC = () => {
     }
   }, [selectedBrand]);
 
-  const handlePostCreated = (newPost: Post) => {
+  const handlePostCreated = (_newPost: Post) => {
     if (selectedBrand) {
       loadBrandData(selectedBrand.id);
     }
   };
 
   return (
-    <div className="min-h-screen bg-[#080C14] text-slate-100 flex flex-col">
-      {/* Top Banner Notice for HackwithHyderabad 3.0 Demo */}
-      <div className="bg-gradient-to-r from-sky-950/80 via-slate-900 to-pink-950/80 border-b border-slate-800/80 px-4 py-1.5 text-center text-[11px] text-slate-300 flex items-center justify-center gap-2">
-        <span className="font-semibold text-sky-400">SocialPulse AI</span>
-        <span className="text-slate-600">|</span>
-        <span>HackwithHyderabad 3.0 Engagement Agent</span>
-        <span className="text-slate-600">|</span>
-        <span className="flex items-center gap-1 text-pink-400 font-mono">
-          <Brain className="w-3 h-3 text-pink-400" />
-          Hindsight Vectorize Memory Active
-        </span>
+    <div className="min-h-screen bg-[#050505] text-[#F5F5F5] flex flex-col antialiased font-sans">
+      {/* Top Hackathon Status Bar — Minimal Monochrome */}
+      <div className="bg-[#050505] border-b border-[#202020] px-4 py-1 text-center text-[10px] sm:text-[11px] font-mono text-neutral-400 flex items-center justify-center gap-2 flex-wrap">
+        <span className="font-semibold text-white">SocialPulse AI</span>
+        <span className="text-neutral-700">•</span>
+        <span>HackWithHyderabad 3.0</span>
+        <span className="text-neutral-700">•</span>
+        <span className="text-neutral-300">Hindsight Persistent Memory Active</span>
       </div>
 
       <Navbar
@@ -92,11 +88,11 @@ export const App: React.FC = () => {
         onOpenPostModal={() => setIsPostModalOpen(true)}
       />
 
-      <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-10">
         {isLoading ? (
           <div className="flex flex-col items-center justify-center min-h-[400px] gap-3">
-            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-sky-400"></div>
-            <p className="text-xs text-slate-400 font-mono">Initializing SocialPulse Agent & Memory Bank...</p>
+            <div className="animate-spin rounded-full h-7 w-7 border-b-2 border-neutral-300"></div>
+            <p className="text-xs text-neutral-500 font-mono">Initializing SocialPulse Agent & Hindsight Memory...</p>
           </div>
         ) : (
           <>
@@ -128,11 +124,11 @@ export const App: React.FC = () => {
         )}
       </main>
 
-      {/* Footer */}
-      <footer className="border-t border-slate-900 bg-slate-950 py-6 text-center text-xs text-slate-500 font-mono">
-        <div className="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-2">
+      {/* Minimal Footer */}
+      <footer className="border-t border-[#181818] bg-[#080808] py-6 text-center text-xs text-neutral-500 font-mono mt-auto">
+        <div className="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-3">
           <span>SocialPulse AI — Memory-Powered Social Media Engagement Agent</span>
-          <span>Persistent Memory powered by <strong className="text-sky-400">Hindsight by Vectorize</strong></span>
+          <span>Persistent Memory powered by <strong className="text-neutral-300 font-semibold">Hindsight by Vectorize</strong></span>
         </div>
       </footer>
 

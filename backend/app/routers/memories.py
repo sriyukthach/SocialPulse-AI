@@ -4,7 +4,7 @@ from typing import List, Optional
 from pydantic import BaseModel
 from app.database import get_db
 from app.models.brand import Brand
-from app.schemas.recommendation import RecalledMemoryItem
+from app.schemas.analysis import RecalledMemoryItem
 from app.services.hindsight_service import hindsight_service
 
 router = APIRouter(prefix="/api/memories", tags=["Memories"])
