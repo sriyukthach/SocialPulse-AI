@@ -14,6 +14,7 @@ from app.schemas.analysis import (
     RecurringFeedbackTheme,
     SentimentEvolution,
     ComparativeInsight,
+    ContentRecommendation,
     RecalledMemoryItem,
     EngagementAnalysisResponse
 )
@@ -211,6 +212,7 @@ Return ONLY valid JSON matching this structure:
                 "key_drivers": ["Actionable value", "Problem-solving focus"]
             })),
             "comparative_insights": [ComparativeInsight(**c) for c in analysis_data.get("comparative_insights", [])],
+            "recommendations": [ContentRecommendation(**r) for r in analysis_data.get("recommendations", [])],
             "recalled_memories": recalled_items,
             "model_used": model_used,
             "memory_bank_id": brand.slug
@@ -321,6 +323,30 @@ Return ONLY valid JSON matching this structure:
             f"Hindsight bank '{brand.slug}' currently stores {len(memories)} persistent memory facts for this channel."
         )
 
+        recommendations = [
+            {
+                "title": f"Expand coverage of '{top_video.topic}'",
+                "category": "Topics to Explore",
+                "recommendation": f"Produce follow-up coverage or deeper breakdowns related to '{top_video.topic}'.",
+                "why": f"This topic generated peak channel reach of {top_video.shares_count:,} views and {top_video.likes:,} likes.",
+                "evidence": f"Outperformed channel average view count of {int(total_views / total_posts):,} views."
+            },
+            {
+                "title": f"Prioritize '{brand_stats.get('top_performing_format', 'Long-form Review')}' format",
+                "category": "Formats to Consider",
+                "recommendation": f"Structure upcoming video production around {brand_stats.get('top_performing_format', 'Long-form Review')} style delivery.",
+                "why": "Videos in this format consistently achieve strong viewer retention and comment activity.",
+                "evidence": f"Calculated format engagement rate index is {avg_er}% across analyzed uploads."
+            },
+            {
+                "title": "Respond directly to audience comment inquiries",
+                "category": "Audience Questions to Answer",
+                "recommendation": "Dedicated Q&A or follow-up video responding directly to top comment threads.",
+                "why": "Viewers actively ask technical and practical questions in recent video comment sections.",
+                "evidence": f"{total_comments:,} public comments analyzed across {total_posts} uploads."
+            }
+        ]
+
         return {
             "executive_summary": exec_summary,
             "engagement_patterns": engagement_patterns,
@@ -338,7 +364,8 @@ Return ONLY valid JSON matching this structure:
                     "metrics_comparison": f"Top: {top_video.shares_count:,} views | Avg: {int(total_views / total_posts):,} views",
                     "agent_takeaway": f"Replicating key elements of '{top_video.topic}' increases potential view reach."
                 }
-            ]
+            ],
+            "recommendations": recommendations
         }
 
 gemini_service = GeminiService()

@@ -41,6 +41,13 @@ class ComparativeInsight(BaseModel):
     metrics_comparison: str = Field(..., example="620 likes & 185 shares (Carousel) vs. 95 likes & 4 shares (Static Image)")
     agent_takeaway: str = Field(..., example="Audience reacts negatively to direct sales flyers but actively engages with step-by-step guides.")
 
+class ContentRecommendation(BaseModel):
+    title: str = Field(..., example="Create battery drain test comparisons")
+    category: str = Field("Topics to Explore", example="Topics to Explore") # Topics to Explore, Formats to Consider, Audience Questions to Answer, What to Avoid, Next Video Idea
+    recommendation: str = Field(..., example="Produce side-by-side battery drain tests across competing models.")
+    why: str = Field(..., example="Viewers repeatedly ask about battery degradation in comment threads.")
+    evidence: str = Field(..., example="3 out of 10 analyzed uploads covering thermal/battery topics outperformed channel avg ER by 40%.")
+
 class EngagementAnalysisResponse(BaseModel):
     brand_id: int
     brand_name: str
@@ -52,6 +59,7 @@ class EngagementAnalysisResponse(BaseModel):
     recurring_questions: List[RecurringFeedbackTheme]
     sentiment_evolution: SentimentEvolution
     comparative_insights: List[ComparativeInsight]
+    recommendations: List[ContentRecommendation] = Field(default_factory=list)
     recalled_memories: List[RecalledMemoryItem]
     model_used: str
     memory_bank_id: str

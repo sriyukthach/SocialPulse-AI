@@ -34,7 +34,8 @@ def generate_engagement_analysis(req: AnalysisRequest, db: Session = Depends(get
             "format_performance": [f.model_dump() for f in result["format_performance"]],
             "recurring_questions": [q.model_dump() for q in result["recurring_questions"]],
             "sentiment_evolution": result["sentiment_evolution"].model_dump(),
-            "comparative_insights": [c.model_dump() for c in result["comparative_insights"]]
+            "comparative_insights": [c.model_dump() for c in result["comparative_insights"]],
+            "recommendations": [r.model_dump() for r in result.get("recommendations", [])]
         }),
         recalled_memories_json=json.dumps([mem.model_dump() for mem in result["recalled_memories"]])
     )
@@ -52,6 +53,7 @@ def generate_engagement_analysis(req: AnalysisRequest, db: Session = Depends(get
         recurring_questions=result["recurring_questions"],
         sentiment_evolution=result["sentiment_evolution"],
         comparative_insights=result["comparative_insights"],
+        recommendations=result.get("recommendations", []),
         recalled_memories=result["recalled_memories"],
         model_used=result["model_used"],
         memory_bank_id=brand.slug

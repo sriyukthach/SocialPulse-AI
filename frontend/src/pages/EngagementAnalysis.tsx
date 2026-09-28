@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { 
-  BarChart3, Brain, Sparkles, RefreshCw, TrendingUp, AlertTriangle, 
-  CheckCircle2, HelpCircle, MessageSquare, Layers, ShieldCheck, Quote,
-  Search, ThumbsUp, ThumbsDown, Zap, Activity, ArrowRight
+  BarChart3, RefreshCw, TrendingUp, AlertTriangle, 
+  CheckCircle2, HelpCircle, MessageSquare, Layers, Quote,
+  Search, ThumbsUp, ThumbsDown, Lightbulb, Activity, ArrowRight
 } from 'lucide-react';
 import { Brand, EngagementAnalysisResponse } from '../types';
 import { api } from '../api/client';
@@ -27,7 +27,7 @@ export const EngagementAnalysis: React.FC<EngagementAnalysisProps> = ({ brand })
       setAnalysis(res);
     } catch (err: any) {
       console.error(err);
-      setErrorMessage(err.response?.data?.detail || err.message || 'Failed to fetch engagement analysis');
+      setErrorMessage(err.response?.data?.detail || err.message || 'Failed to fetch performance insights');
     } finally {
       setIsLoading(false);
     }
@@ -47,23 +47,23 @@ export const EngagementAnalysis: React.FC<EngagementAnalysisProps> = ({ brand })
 
   return (
     <div className="space-y-8 animate-in fade-in duration-300">
-      {/* 1. Header Studio Hero — Editorial Monochrome */}
+      {/* 1. Header Studio Hero */}
       <div className="bg-[#101010] border border-[#252525] rounded-3xl p-6 sm:p-8">
         <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6 mb-6">
           <div className="space-y-2 max-w-2xl">
             <div className="flex items-center gap-2">
-              <div className="p-1.5 rounded-lg bg-neutral-900 border border-neutral-800 text-neutral-300">
+              <div className="p-1.5 rounded-lg bg-neutral-900 border border-neutral-800 text-white">
                 <BarChart3 className="w-4 h-4" />
               </div>
-              <span className="text-[10px] font-mono font-semibold text-neutral-400 uppercase tracking-[0.15em]">
-                MEMORY-POWERED CHANNEL INTELLIGENCE
+              <span className="text-xs font-mono font-semibold text-neutral-400 uppercase tracking-wider">
+                PERFORMANCE INSIGHTS
               </span>
             </div>
             <h1 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
-              YouTube Engagement Intelligence
+              Channel Analysis
             </h1>
             <p className="text-xs sm:text-sm text-neutral-400 leading-relaxed">
-              Synthesizing historical public video metrics, viewer comments, and community sentiment retained in <strong className="text-white">{brand?.name}</strong>'s Hindsight memory bank (<span className="text-neutral-300 font-mono">"{brand?.slug}"</span>).
+              SocialPulse analyzed your recent videos, public engagement metrics, and available audience feedback for <strong className="text-white">{brand?.name}</strong> to identify recurring patterns.
             </p>
           </div>
 
@@ -71,38 +71,15 @@ export const EngagementAnalysis: React.FC<EngagementAnalysisProps> = ({ brand })
             <button
               onClick={() => fetchAnalysis(focusQuery)}
               disabled={isLoading}
-              className="flex items-center gap-2 bg-[#F5F5F5] hover:bg-white text-[#080808] px-5 py-3 rounded-xl text-xs sm:text-sm font-bold transition-all disabled:opacity-50 active:scale-95 whitespace-nowrap"
+              className="flex items-center gap-2 bg-white hover:bg-neutral-200 text-black px-5 py-3 rounded-xl text-xs sm:text-sm font-extrabold transition-all disabled:opacity-50 active:scale-95 whitespace-nowrap shadow-sm"
             >
               <RefreshCw className={`w-4 h-4 ${isLoading ? 'animate-spin' : ''}`} />
-              <span>{isLoading ? 'Recalling & Analyzing...' : 'Refresh Intelligence'}</span>
+              <span>{isLoading ? 'Analyzing Channel...' : 'Refresh Intelligence'}</span>
             </button>
           </div>
         </div>
 
-        {/* Process Flow Bar */}
-        <div className="hidden sm:flex items-center justify-between bg-[#080808] p-3 rounded-2xl border border-[#202020] text-[10px] font-mono text-neutral-400 mb-4">
-          <span className="flex items-center gap-1.5 text-neutral-300 font-semibold">
-            <span className="h-5 w-5 rounded-full bg-neutral-900 text-white flex items-center justify-center text-[10px]">1</span>
-            Public Video Data
-          </span>
-          <ArrowRight className="w-3.5 h-3.5 text-neutral-600" />
-          <span className="flex items-center gap-1.5 text-neutral-300 font-semibold">
-            <span className="h-5 w-5 rounded-full bg-neutral-900 text-white flex items-center justify-center text-[10px]">2</span>
-            Hindsight Memory
-          </span>
-          <ArrowRight className="w-3.5 h-3.5 text-neutral-600" />
-          <span className="flex items-center gap-1.5 text-neutral-300 font-semibold">
-            <span className="h-5 w-5 rounded-full bg-neutral-900 text-white flex items-center justify-center text-[10px]">3</span>
-            Gemini Synthesis
-          </span>
-          <ArrowRight className="w-3.5 h-3.5 text-neutral-600" />
-          <span className="flex items-center gap-1.5 text-white font-semibold">
-            <span className="h-5 w-5 rounded-full bg-white text-black flex items-center justify-center text-[10px] font-bold">4</span>
-            Learned Intelligence
-          </span>
-        </div>
-
-        {/* Focus Query Input */}
+        {/* Search Query Filter */}
         <form onSubmit={handleSearch} className="flex flex-col sm:flex-row gap-3 bg-[#080808] p-3 rounded-2xl border border-[#202020]">
           <div className="relative flex-1">
             <Search className="w-4 h-4 text-neutral-500 absolute left-3.5 top-1/2 -translate-y-1/2" />
@@ -110,8 +87,8 @@ export const EngagementAnalysis: React.FC<EngagementAnalysisProps> = ({ brand })
               type="text"
               value={focusQuery}
               onChange={(e) => setFocusQuery(e.target.value)}
-              placeholder={`Focus agent analysis on specific topics for ${brand?.name} (e.g., battery tests, thermal benchmarks, camera shootout)...`}
-              className="w-full bg-[#121212] border border-[#252525] rounded-xl pl-9 pr-4 py-2 text-xs text-neutral-100 placeholder-neutral-500 focus:border-neutral-500 outline-none"
+              placeholder={`Focus analysis on specific video topics for ${brand?.name} (e.g., thermal tests, comparisons, camera benchmarks)...`}
+              className="w-full bg-[#121212] border border-[#252525] rounded-xl pl-9 pr-4 py-2 text-xs text-neutral-100 placeholder-neutral-500 focus:border-neutral-500 outline-none font-mono"
             />
           </div>
           <button
@@ -119,12 +96,12 @@ export const EngagementAnalysis: React.FC<EngagementAnalysisProps> = ({ brand })
             disabled={isLoading}
             className="bg-neutral-800 hover:bg-neutral-700 text-neutral-200 px-4 py-2 rounded-xl text-xs font-semibold whitespace-nowrap border border-neutral-700 transition-all"
           >
-            Apply Focus Query
+            Apply Focus
           </button>
         </form>
 
         {errorMessage && (
-          <div className="mt-4 p-3 bg-neutral-900 border border-neutral-700 rounded-xl flex items-center gap-2 text-xs text-neutral-300">
+          <div className="mt-4 p-3.5 bg-neutral-900 border border-neutral-700 rounded-xl flex items-center gap-2.5 text-xs text-neutral-300 font-mono">
             <AlertTriangle className="w-4 h-4 text-neutral-400 shrink-0" />
             <span>{errorMessage}</span>
           </div>
@@ -134,43 +111,66 @@ export const EngagementAnalysis: React.FC<EngagementAnalysisProps> = ({ brand })
       {isLoading ? (
         <div className="flex flex-col items-center justify-center min-h-[350px] gap-3">
           <div className="animate-spin rounded-full h-7 w-7 border-b-2 border-neutral-300"></div>
-          <p className="text-xs text-neutral-500 font-mono">Recalling Hindsight memories & synthesizing engagement analysis...</p>
+          <p className="text-xs text-neutral-400 font-mono">Synthesizing channel analysis and viewer feedback...</p>
         </div>
       ) : analysis ? (
         <div className="space-y-8 animate-in fade-in duration-300">
-          {/* 1. Executive Learning Summary Panel */}
+          {/* 1. Executive Summary Panel */}
           <div className="bg-[#101010] border border-[#252525] rounded-3xl p-6 sm:p-8">
-            <div className="flex items-center gap-2 mb-3">
-              <div className="p-1.5 rounded-lg bg-neutral-900 border border-neutral-800 text-neutral-300">
-                <Brain className="w-4 h-4" />
-              </div>
-              <h3 className="text-[10px] font-mono font-bold uppercase tracking-[0.15em] text-neutral-400">
-                1. EXECUTIVE LEARNING SUMMARY
-              </h3>
-            </div>
-            <p className="text-sm sm:text-base text-white leading-relaxed font-medium">
+            <h2 className="text-xs font-mono font-bold uppercase tracking-wider text-neutral-400 mb-3">
+              Executive Summary
+            </h2>
+            <p className="text-base sm:text-lg text-white leading-relaxed font-medium">
               "{analysis.executive_summary}"
             </p>
-            <div className="mt-4 pt-4 border-t border-[#202020] flex flex-wrap items-center justify-between gap-3 text-xs text-neutral-400 font-mono">
-              <span className="flex items-center gap-1.5 text-neutral-300">
-                <ShieldCheck className="w-4 h-4 text-neutral-400 shrink-0" />
-                Hindsight Memory Bank: <strong className="text-white font-semibold">"{analysis.memory_bank_id}"</strong>
-              </span>
-              <span>
-                Analysis Engine: <strong className="text-neutral-300">{analysis.model_used}</strong>
-              </span>
-            </div>
           </div>
 
-          {/* 2. Detected Audience Engagement Patterns */}
+          {/* 2. Content Recommendations Section */}
+          {analysis.recommendations && analysis.recommendations.length > 0 && (
+            <div className="space-y-4">
+              <div className="flex items-center gap-2">
+                <div className="p-1.5 rounded-lg bg-neutral-900 border border-neutral-800 text-white">
+                  <Lightbulb className="w-4 h-4" />
+                </div>
+                <h2 className="text-xl font-bold text-white tracking-tight">Content Recommendations</h2>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+                {analysis.recommendations.map((rec, rIdx) => (
+                  <div key={rIdx} className="bg-[#101010] border border-[#252525] rounded-2xl p-5 space-y-3 flex flex-col justify-between">
+                    <div className="space-y-2">
+                      <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-neutral-900 border border-neutral-800 text-neutral-300 uppercase font-semibold">
+                        {rec.category}
+                      </span>
+                      <h3 className="text-sm font-bold text-white leading-snug">{rec.title}</h3>
+                      <p className="text-xs text-neutral-300 leading-relaxed bg-[#080808] p-3 rounded-xl border border-[#202020]">
+                        {rec.recommendation}
+                      </p>
+                    </div>
+
+                    <div className="pt-3 border-t border-[#202020] space-y-1 text-xs">
+                      <div>
+                        <strong className="text-neutral-400 font-mono text-[10px] uppercase block">Why:</strong>
+                        <span className="text-neutral-300">{rec.why}</span>
+                      </div>
+                      <div>
+                        <strong className="text-neutral-400 font-mono text-[10px] uppercase block">Evidence:</strong>
+                        <span className="text-neutral-400 italic">{rec.evidence}</span>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* 3. Detected Audience Patterns */}
           <div className="space-y-4">
             <div className="flex items-center gap-2">
-              <div className="p-1.5 rounded-lg bg-neutral-900 border border-neutral-800 text-neutral-300">
+              <div className="p-1.5 rounded-lg bg-neutral-900 border border-neutral-800 text-white">
                 <TrendingUp className="w-4 h-4" />
               </div>
-              <h2 className="text-lg sm:text-xl font-bold text-white tracking-tight">
-                2. Detected Audience Engagement Patterns
-              </h2>
+              <h2 className="text-xl font-bold text-white tracking-tight">Detected Audience Patterns</h2>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
@@ -191,7 +191,7 @@ export const EngagementAnalysis: React.FC<EngagementAnalysisProps> = ({ brand })
                           }`}
                         >
                           {isPos ? <ThumbsUp className="w-3.5 h-3.5" /> : <ThumbsDown className="w-3.5 h-3.5" />}
-                          {isPos ? 'HIGH PERFORMANCE PATTERN' : 'AUDIENCE CONSTRAINT / LOW PERFORMANCE'}
+                          {isPos ? 'HIGH PERFORMANCE PATTERN' : 'AUDIENCE CONSTRAINT'}
                         </span>
                       </div>
 
@@ -200,11 +200,10 @@ export const EngagementAnalysis: React.FC<EngagementAnalysisProps> = ({ brand })
                         {pat.observation}
                       </p>
 
-                      {/* Evidence points */}
                       {pat.evidence_points && pat.evidence_points.length > 0 && (
                         <div className="mb-4 space-y-1.5">
-                          <span className="text-[10px] font-bold uppercase tracking-[0.12em] text-neutral-400 block">
-                            Historical Metrics & Evidence:
+                          <span className="text-[10px] font-bold uppercase tracking-wider text-neutral-400 block">
+                            Evidence & Metrics:
                           </span>
                           <ul className="space-y-1">
                             {pat.evidence_points.map((ev, eIdx) => (
@@ -218,14 +217,12 @@ export const EngagementAnalysis: React.FC<EngagementAnalysisProps> = ({ brand })
                       )}
                     </div>
 
-                    {/* Visually Distinct "WHAT THE AGENT LEARNED" Callout */}
                     <div className="pt-3 border-t border-[#202020] bg-[#0A0A0A] -mx-6 -mb-6 p-4 rounded-b-2xl border-b border-[#252525]">
-                      <div className="flex items-start gap-2 text-xs">
-                        <Zap className="w-4 h-4 text-white shrink-0 mt-0.5" />
-                        <p className="text-neutral-200 text-[11px] leading-relaxed">
-                          <strong className="text-white font-bold uppercase tracking-[0.1em]">WHAT THE AGENT LEARNED: </strong>
-                          {pat.learned_insight}
-                        </p>
+                      <div className="text-xs text-neutral-200">
+                        <strong className="text-white font-bold uppercase tracking-wider text-[10px] block mb-0.5">
+                          KEY TAKEAWAY:
+                        </strong>
+                        <p className="text-neutral-300 text-xs leading-relaxed">{pat.learned_insight}</p>
                       </div>
                     </div>
                   </div>
@@ -234,15 +231,13 @@ export const EngagementAnalysis: React.FC<EngagementAnalysisProps> = ({ brand })
             </div>
           </div>
 
-          {/* 3. Content Format Efficacy Matrix */}
+          {/* 4. Format Performance Comparison */}
           <div className="space-y-4">
             <div className="flex items-center gap-2">
-              <div className="p-1.5 rounded-lg bg-neutral-900 border border-neutral-800 text-neutral-300">
+              <div className="p-1.5 rounded-lg bg-neutral-900 border border-neutral-800 text-white">
                 <Layers className="w-4 h-4" />
               </div>
-              <h2 className="text-lg sm:text-xl font-bold text-white tracking-tight">
-                3. Content Format Efficacy Matrix
-              </h2>
+              <h2 className="text-xl font-bold text-white tracking-tight">Format Performance Matrix</h2>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
@@ -256,15 +251,12 @@ export const EngagementAnalysis: React.FC<EngagementAnalysisProps> = ({ brand })
                   : 'bg-neutral-900 text-neutral-400 border border-neutral-800';
 
                 return (
-                  <div
-                    key={fIdx}
-                    className="bg-[#101010] border border-[#252525] rounded-2xl p-5 flex flex-col justify-between"
-                  >
+                  <div key={fIdx} className="bg-[#101010] border border-[#252525] rounded-2xl p-5 flex flex-col justify-between">
                     <div>
                       <div className="flex items-center justify-between mb-3">
                         <span className="text-sm font-bold text-white">{fmt.format_name}</span>
                         <span className={`text-[10px] px-2 py-0.5 rounded font-mono uppercase ${badgeColor}`}>
-                          {fmt.performance_rating} Efficacy
+                          {fmt.performance_rating}
                         </span>
                       </div>
 
@@ -277,7 +269,6 @@ export const EngagementAnalysis: React.FC<EngagementAnalysisProps> = ({ brand })
                             {fmt.avg_engagement_rate}%
                           </span>
                         </div>
-                        {/* Visual Efficacy Meter: Subtle Monochrome Tones */}
                         <div className="w-full bg-neutral-900 h-1.5 rounded-full overflow-hidden">
                           <div
                             className={`h-full rounded-full transition-all duration-500 ${
@@ -291,36 +282,6 @@ export const EngagementAnalysis: React.FC<EngagementAnalysisProps> = ({ brand })
                       <p className="text-xs text-neutral-300 leading-relaxed mb-4 italic bg-[#0A0A0A] p-2.5 rounded-lg border border-[#202020]">
                         "{fmt.audience_reaction_summary}"
                       </p>
-
-                      <div className="space-y-2 mb-3 text-xs">
-                        <div>
-                          <strong className="text-[10px] uppercase tracking-wider text-neutral-300 block mb-1">
-                            Key Strengths:
-                          </strong>
-                          <ul className="space-y-0.5 text-neutral-400 text-[11px]">
-                            {fmt.strengths.map((s, sIdx) => (
-                              <li key={sIdx} className="flex items-center gap-1.5">
-                                <span className="text-white font-bold">✓</span> {s}
-                              </li>
-                            ))}
-                          </ul>
-                        </div>
-
-                        {fmt.weaknesses && fmt.weaknesses.length > 0 && (
-                          <div>
-                            <strong className="text-[10px] uppercase tracking-wider text-neutral-400 block mb-1">
-                              Audience Constraints:
-                            </strong>
-                            <ul className="space-y-0.5 text-neutral-500 text-[11px]">
-                              {fmt.weaknesses.map((w, wIdx) => (
-                                <li key={wIdx} className="flex items-center gap-1.5">
-                                  <span className="text-neutral-400 font-bold">⚠</span> {w}
-                                </li>
-                              ))}
-                            </ul>
-                          </div>
-                        )}
-                      </div>
                     </div>
                   </div>
                 );
@@ -328,171 +289,49 @@ export const EngagementAnalysis: React.FC<EngagementAnalysisProps> = ({ brand })
             </div>
           </div>
 
-          {/* 4. Recurring Community Questions & Feedback Themes */}
+          {/* 5. Recurring Audience Questions */}
           <div className="space-y-4">
             <div className="flex items-center gap-2">
-              <div className="p-1.5 rounded-lg bg-neutral-900 border border-neutral-800 text-neutral-300">
+              <div className="p-1.5 rounded-lg bg-neutral-900 border border-neutral-800 text-white">
                 <HelpCircle className="w-4 h-4" />
               </div>
-              <h2 className="text-lg sm:text-xl font-bold text-white tracking-tight">
-                4. Recurring Audience Questions & Feedback Themes
-              </h2>
+              <h2 className="text-xl font-bold text-white tracking-tight">Recurring Viewer Questions</h2>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
               {analysis.recurring_questions.map((theme, tIdx) => (
-                <div
-                  key={tIdx}
-                  className="bg-[#101010] border border-[#252525] rounded-2xl p-6 space-y-4 flex flex-col justify-between"
-                >
-                  <div className="space-y-3">
-                    <div className="flex items-center justify-between gap-2">
-                      <h3 className="text-base font-bold text-white">{theme.theme}</h3>
-                      <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-neutral-900 text-neutral-300 border border-neutral-800 uppercase font-semibold">
-                        {theme.frequency}
-                      </span>
-                    </div>
+                <div key={tIdx} className="bg-[#101010] border border-[#252525] rounded-2xl p-6 space-y-4">
+                  <div className="flex items-center justify-between gap-2">
+                    <h3 className="text-base font-bold text-white">{theme.theme}</h3>
+                    <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-neutral-900 text-neutral-300 border border-neutral-800 uppercase font-semibold">
+                      {theme.frequency}
+                    </span>
+                  </div>
 
-                    <div className="bg-[#080808] p-3 rounded-xl border border-[#202020]">
-                      <span className="text-[10px] font-bold uppercase tracking-[0.12em] text-neutral-400 block mb-1">
-                        Identified Audience Pain Point:
-                      </span>
-                      <p className="text-xs text-neutral-200 leading-relaxed">
-                        {theme.audience_pain_point}
-                      </p>
-                    </div>
+                  <p className="text-xs text-neutral-300 leading-relaxed bg-[#080808] p-3 rounded-xl border border-[#202020]">
+                    {theme.audience_pain_point}
+                  </p>
 
-                    {/* Sample Community Quotes — Readable Blockquotes */}
-                    {theme.sample_quotes && theme.sample_quotes.length > 0 && (
-                      <div>
-                        <span className="text-[10px] font-bold uppercase tracking-[0.12em] text-neutral-400 block mb-1.5">
-                          Sample Community Comments:
-                        </span>
-                        <div className="space-y-1.5">
-                          {theme.sample_quotes.map((quote, qIdx) => (
-                            <div
-                              key={qIdx}
-                              className="text-xs text-neutral-300 italic font-mono bg-[#080808] px-3 py-2 rounded-r-xl border-l-2 border-neutral-400"
-                            >
-                              "{quote}"
-                            </div>
-                          ))}
+                  {theme.sample_quotes && theme.sample_quotes.length > 0 && (
+                    <div className="space-y-1.5">
+                      <span className="text-[10px] font-bold uppercase tracking-wider text-neutral-400 block">
+                        Viewer Comments:
+                      </span>
+                      {theme.sample_quotes.map((quote, qIdx) => (
+                        <div key={qIdx} className="text-xs text-neutral-300 italic font-mono bg-[#080808] px-3 py-2 rounded-r-xl border-l-2 border-neutral-400">
+                          "{quote}"
                         </div>
-                      </div>
-                    )}
-                  </div>
-
-                  {/* Hindsight Citation */}
-                  <div className="pt-3 border-t border-[#202020] text-[11px] text-neutral-400 font-mono flex items-start gap-2">
-                    <Quote className="w-3.5 h-3.5 text-neutral-400 shrink-0 mt-0.5" />
-                    <span>{theme.hindsight_memory_citation}</span>
-                  </div>
+                      ))}
+                    </div>
+                  )}
                 </div>
               ))}
             </div>
           </div>
-
-          {/* 5 & 6. Sentiment Dynamics & Comparative Insights */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            {/* 5. Sentiment Dynamics */}
-            <div className="bg-[#101010] border border-[#252525] rounded-2xl p-6 space-y-4">
-              <div className="flex items-center gap-2">
-                <div className="p-1.5 rounded-lg bg-neutral-900 border border-neutral-800 text-neutral-300">
-                  <MessageSquare className="w-4 h-4" />
-                </div>
-                <h3 className="text-base font-bold text-white">5. Audience Sentiment Dynamics</h3>
-              </div>
-
-              <div className="bg-[#080808] p-4 rounded-xl border border-[#202020]">
-                <div className="text-[10px] font-bold uppercase tracking-[0.12em] text-neutral-400 mb-1">
-                  Overall Sentiment Classification:
-                </div>
-                <div className="text-sm font-bold text-white mb-2">
-                  {analysis.sentiment_evolution.overall_sentiment}
-                </div>
-                <p className="text-xs text-neutral-300 leading-relaxed">
-                  {analysis.sentiment_evolution.sentiment_shift_summary}
-                </p>
-              </div>
-
-              {analysis.sentiment_evolution.key_drivers && (
-                <div>
-                  <span className="text-[10px] font-bold uppercase tracking-[0.12em] text-neutral-400 block mb-2">
-                    Key Drivers of Community Trust:
-                  </span>
-                  <ul className="space-y-1.5 text-xs text-neutral-300">
-                    {analysis.sentiment_evolution.key_drivers.map((kd, kdIdx) => (
-                      <li key={kdIdx} className="flex items-center gap-2">
-                        <CheckCircle2 className="w-3.5 h-3.5 text-neutral-400 shrink-0" />
-                        <span>{kd}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-            </div>
-
-            {/* 6. Comparative Insights */}
-            <div className="bg-[#101010] border border-[#252525] rounded-2xl p-6 space-y-4">
-              <div className="flex items-center gap-2">
-                <div className="p-1.5 rounded-lg bg-neutral-900 border border-neutral-800 text-neutral-300">
-                  <Activity className="w-4 h-4" />
-                </div>
-                <h3 className="text-base font-bold text-white">6. Comparative Post Performance</h3>
-              </div>
-
-              {analysis.comparative_insights.map((comp, cIdx) => (
-                <div key={cIdx} className="bg-[#080808] p-4 rounded-xl border border-[#202020] space-y-2">
-                  <h4 className="text-xs font-bold text-neutral-200 uppercase tracking-wider">
-                    {comp.comparison_title}
-                  </h4>
-                  <p className="text-xs text-neutral-300 leading-relaxed font-mono bg-[#121212] p-2.5 rounded-lg border border-[#252525]">
-                    {comp.metrics_comparison}
-                  </p>
-                  <p className="text-xs text-neutral-400 leading-relaxed">
-                    {comp.analysis}
-                  </p>
-                  <div className="pt-2 border-t border-[#202020] text-[11px] text-neutral-200 font-medium">
-                    🎯 <strong>Agent Conclusion:</strong> {comp.agent_takeaway}
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* 7. Recalled Memories Supporting Intelligence */}
-          {analysis.recalled_memories.length > 0 && (
-            <div className="bg-[#101010] border border-[#252525] rounded-2xl p-6 space-y-4">
-              <div className="flex items-center justify-between flex-wrap gap-2">
-                <div className="flex items-center gap-2">
-                  <div className="p-1.5 rounded-lg bg-neutral-900 border border-neutral-800 text-neutral-300">
-                    <Brain className="w-4 h-4" />
-                  </div>
-                  <h3 className="text-sm font-bold text-white">
-                    7. Recalled Hindsight Memories Used in Analysis ({analysis.recalled_memories.length})
-                  </h3>
-                </div>
-                <span className="text-[10px] font-mono text-neutral-300 bg-[#080808] border border-[#252525] px-2.5 py-0.5 rounded flex items-center gap-1">
-                  <ShieldCheck className="w-3.5 h-3.5 text-neutral-400" />
-                  Verified Hindsight Recall
-                </span>
-              </div>
-
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
-                {analysis.recalled_memories.slice(0, 9).map((mem, mIdx) => (
-                  <div
-                    key={mIdx}
-                    className="bg-[#080808] p-3 rounded-xl border border-[#202020] text-[11px] text-neutral-300 leading-relaxed font-mono"
-                  >
-                    <Quote className="w-3 h-3 text-neutral-500 mb-1" />
-                    "{mem.text}"
-                  </div>
-                ))}
-              </div>
-            </div>
-          )}
         </div>
       ) : null}
     </div>
   );
 };
+
+export default EngagementAnalysis;

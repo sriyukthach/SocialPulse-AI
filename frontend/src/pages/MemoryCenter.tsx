@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Brain, Search, Sparkles, RefreshCw, Send, ShieldCheck, Plus } from 'lucide-react';
+import { Brain, Search, Sparkles, RefreshCw, Send, Plus } from 'lucide-react';
 import { Brand, RecalledMemoryItem } from '../types';
 import { api } from '../api/client';
 import { MemoryInsightCard } from '../components/MemoryInsightCard';
@@ -16,8 +16,8 @@ export const MemoryCenter: React.FC<MemoryCenterProps> = ({ brand }) => {
   const [isRetaining, setIsRetaining] = useState(false);
   const [retainMessage, setRetainMessage] = useState<string | null>(null);
 
-  // Reflection states
-  const [reflectionQuery, setReflectionQuery] = useState('What are the recurring audience pain points and preferred formats?');
+  // Synthesis / Reflection states
+  const [reflectionQuery, setReflectionQuery] = useState('What are the recurring audience preferences and preferred formats?');
   const [reflectionResult, setReflectionResult] = useState<string | null>(null);
   const [isReflecting, setIsReflecting] = useState(false);
 
@@ -38,7 +38,7 @@ export const MemoryCenter: React.FC<MemoryCenterProps> = ({ brand }) => {
     if (brand) {
       fetchMemories();
     }
-  }, [brand]);
+  }, [brand?.id]);
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
@@ -50,18 +50,18 @@ export const MemoryCenter: React.FC<MemoryCenterProps> = ({ brand }) => {
     if (!brand || !newInsightText.trim()) return;
 
     setIsRetaining(true);
-    setRetainMessage('Retaining observation into Hindsight Memory Bank...');
+    setRetainMessage('Saving channel observation...');
 
     try {
       await api.retainInsight(brand.id, newInsightText);
-      setRetainMessage('Observation successfully retained in Hindsight!');
+      setRetainMessage('Observation saved successfully!');
       setNewInsightText('');
       setTimeout(() => {
         setRetainMessage(null);
         fetchMemories();
       }, 1000);
     } catch (err: any) {
-      setRetainMessage('Error retaining insight: ' + (err.response?.data?.detail || err.message));
+      setRetainMessage('Error saving insight: ' + (err.response?.data?.detail || err.message));
     } finally {
       setIsRetaining(false);
     }
@@ -75,7 +75,7 @@ export const MemoryCenter: React.FC<MemoryCenterProps> = ({ brand }) => {
       setReflectionResult(res.reflection);
     } catch (err: any) {
       console.error(err);
-      setReflectionResult('Unable to synthesize reflection at this time.');
+      setReflectionResult('Unable to synthesize channel reflection at this time.');
     } finally {
       setIsReflecting(false);
     }
@@ -83,57 +83,54 @@ export const MemoryCenter: React.FC<MemoryCenterProps> = ({ brand }) => {
 
   return (
     <div className="space-y-8 animate-in fade-in duration-300">
-      {/* Header Studio Hero — Technical Monochrome */}
+      {/* Header Studio Hero */}
       <div className="bg-[#101010] border border-[#252525] rounded-3xl p-6 sm:p-8">
         <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
           <div className="space-y-2 max-w-2xl">
             <div className="flex items-center gap-2">
-              <div className="p-1.5 rounded-lg bg-neutral-900 border border-neutral-800 text-neutral-300">
+              <div className="p-1.5 rounded-lg bg-neutral-900 border border-neutral-800 text-white">
                 <Brain className="w-4 h-4" />
               </div>
-              <span className="text-[10px] font-mono font-semibold text-neutral-400 uppercase tracking-[0.15em]">
-                HINDSIGHT PERSISTENT MEMORY WORKBENCH
+              <span className="text-xs font-mono font-semibold text-neutral-400 uppercase tracking-wider">
+                CHANNEL MEMORY
               </span>
             </div>
             <h1 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
-              Agent Memory & Audience Intelligence
+              Insights for @{brand?.slug}
             </h1>
             <p className="text-xs sm:text-sm text-neutral-400 leading-relaxed">
-              Explore the persistent mental models and extracted facts stored in Hindsight memory bank <strong className="text-neutral-200 font-mono">"{brand?.slug}"</strong>. Memories persist across sessions to guide future content recommendations.
+              Insights SocialPulse has remembered about <strong className="text-white">{brand?.name}</strong>. Memories persist across sessions to guide future content recommendations.
             </p>
           </div>
 
-          <div className="bg-[#080808] p-4 rounded-2xl border border-[#202020] font-mono text-xs text-neutral-300 space-y-1.5 shrink-0">
-            <div className="text-[10px] text-neutral-500 uppercase tracking-wider font-semibold">Memory Bank Status</div>
+          <div className="bg-[#080808] p-4 rounded-2xl border border-[#202020] text-xs text-neutral-300 space-y-1 shrink-0 font-mono">
+            <div className="text-[10px] text-neutral-500 uppercase tracking-wider font-semibold">Channel Status</div>
             <div className="text-white flex items-center gap-1.5 font-bold">
               <span className="h-2 w-2 rounded-full bg-white animate-pulse"></span>
-              ACTIVE & SYNCED
+              INSIGHTS ACTIVE
             </div>
             <div className="text-[11px] text-neutral-400">
-              Total Memory Units: <strong className="text-white">{memories.length} facts</strong>
+              Saved Observations: <strong className="text-white">{memories.length} items</strong>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Technical Control Panels: RETAIN & REFLECT */}
+      {/* Control Panels: Add Note & Synthesize */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {/* RETAIN Control Panel */}
+        {/* Add Channel Observation */}
         <div className="bg-[#101010] border border-[#252525] rounded-2xl p-6 space-y-4 flex flex-col justify-between">
           <div>
             <div className="flex items-center justify-between gap-2 mb-2">
               <div className="flex items-center gap-2">
-                <div className="p-1.5 rounded-lg bg-neutral-900 border border-neutral-800 text-neutral-300">
+                <div className="p-1.5 rounded-lg bg-neutral-900 border border-neutral-800 text-white">
                   <Plus className="w-4 h-4" />
                 </div>
-                <h3 className="text-sm font-bold text-white">RETAIN: Add Observation / Insight</h3>
+                <h3 className="text-sm font-bold text-white">Add Channel Note</h3>
               </div>
-              <span className="text-[10px] font-mono text-neutral-400 bg-neutral-900 px-2 py-0.5 rounded border border-neutral-800">
-                hindsight.retain()
-              </span>
             </div>
             <p className="text-xs text-neutral-400 leading-relaxed mb-4">
-              Record viewer observations, live Q&A comments, or community feedback. Hindsight will extract facts and integrate them into future channel recommendation context.
+              Record viewer observations, livestream notes, or audience feedback. SocialPulse will save these insights for future recommendations.
             </p>
 
             <form onSubmit={handleRetainInsight} className="space-y-3">
@@ -142,7 +139,7 @@ export const MemoryCenter: React.FC<MemoryCenterProps> = ({ brand }) => {
                 rows={3}
                 value={newInsightText}
                 onChange={(e) => setNewInsightText(e.target.value)}
-                placeholder="e.g., Viewer feedback from live livestream Q&A: 80% of subscribers requested side-by-side battery drain tests and timestamps in tech reviews."
+                placeholder="e.g., Viewer feedback from Q&A: Subscribers requested side-by-side battery drain tests and timestamps in tech reviews."
                 className="w-full bg-[#080808] border border-[#202020] rounded-xl p-3 text-xs text-neutral-100 placeholder-neutral-500 focus:border-neutral-500 outline-none resize-none"
               />
 
@@ -150,38 +147,35 @@ export const MemoryCenter: React.FC<MemoryCenterProps> = ({ brand }) => {
                 {retainMessage ? (
                   <span className="text-xs font-mono text-neutral-300 animate-pulse">{retainMessage}</span>
                 ) : (
-                  <span className="text-[10px] text-neutral-500 font-mono">Retained instantly into Hindsight</span>
+                  <span className="text-[11px] text-neutral-500 font-mono">Saved into channel memory</span>
                 )}
 
                 <button
                   type="submit"
                   disabled={isRetaining || !newInsightText.trim()}
-                  className="flex items-center gap-1.5 bg-[#F5F5F5] hover:bg-white text-[#080808] px-4 py-2 rounded-xl text-xs font-bold transition-all disabled:opacity-50"
+                  className="flex items-center gap-1.5 bg-white hover:bg-neutral-200 text-black px-4 py-2 rounded-xl text-xs font-extrabold transition-all disabled:opacity-50"
                 >
                   <Send className="w-3.5 h-3.5" />
-                  <span>{isRetaining ? 'Retaining...' : 'Retain Insight'}</span>
+                  <span>{isRetaining ? 'Saving...' : 'Save Observation'}</span>
                 </button>
               </div>
             </form>
           </div>
         </div>
 
-        {/* REFLECT Control Panel */}
+        {/* Synthesize Insights */}
         <div className="bg-[#101010] border border-[#252525] rounded-2xl p-6 space-y-4 flex flex-col justify-between">
           <div>
             <div className="flex items-center justify-between gap-2 mb-2">
               <div className="flex items-center gap-2">
-                <div className="p-1.5 rounded-lg bg-neutral-900 border border-neutral-800 text-neutral-300">
+                <div className="p-1.5 rounded-lg bg-neutral-900 border border-neutral-800 text-white">
                   <Sparkles className="w-4 h-4" />
                 </div>
-                <h3 className="text-sm font-bold text-white">REFLECT: Synthesize Memories</h3>
+                <h3 className="text-sm font-bold text-white">Synthesize Channel Insights</h3>
               </div>
-              <span className="text-[10px] font-mono text-neutral-400 bg-neutral-900 px-2 py-0.5 rounded border border-neutral-800">
-                hindsight.reflect()
-              </span>
             </div>
             <p className="text-xs text-neutral-400 leading-relaxed mb-4">
-              Hindsight reflects over accumulated memories to form overarching behavioral models and audience disposition summaries.
+              Synthesize overall audience preferences and recurring patterns across all saved channel memories.
             </p>
 
             <div className="space-y-3">
@@ -190,21 +184,21 @@ export const MemoryCenter: React.FC<MemoryCenterProps> = ({ brand }) => {
                   type="text"
                   value={reflectionQuery}
                   onChange={(e) => setReflectionQuery(e.target.value)}
-                  className="flex-1 bg-[#080808] border border-[#202020] rounded-xl px-3 py-2 text-xs text-neutral-100 placeholder-neutral-500 focus:border-neutral-500 outline-none"
+                  className="flex-1 bg-[#080808] border border-[#202020] rounded-xl px-3 py-2 text-xs text-neutral-100 placeholder-neutral-500 focus:border-neutral-500 outline-none font-mono"
                 />
                 <button
                   onClick={handleReflect}
                   disabled={isReflecting}
                   className="bg-neutral-800 hover:bg-neutral-700 text-white font-semibold px-4 py-2 rounded-xl text-xs border border-neutral-700 whitespace-nowrap transition-all"
                 >
-                  {isReflecting ? 'Synthesizing...' : 'Reflect'}
+                  {isReflecting ? 'Synthesizing...' : 'Synthesize'}
                 </button>
               </div>
 
               {reflectionResult && (
                 <div className="bg-[#080808] p-3.5 rounded-xl border border-[#202020] text-xs text-neutral-300 leading-relaxed italic">
                   <strong className="text-white not-italic block mb-1 text-[10px] font-mono uppercase">
-                    SYNTHESIZED HINDSIGHT REFLECTION:
+                    Synthesized Insight:
                   </strong>
                   "{reflectionResult}"
                 </div>
@@ -214,15 +208,15 @@ export const MemoryCenter: React.FC<MemoryCenterProps> = ({ brand }) => {
         </div>
       </div>
 
-      {/* RECALL Memory Search & Inspection Grid */}
+      {/* Saved Insights List */}
       <div className="space-y-4">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
           <div>
             <h2 className="text-lg font-bold text-white tracking-tight">
-              RECALL: Memory Units ({memories.length})
+              Remembered Audience Insights ({memories.length})
             </h2>
             <p className="text-xs text-neutral-400">
-              Semantic, graph, and keyword memories indexed for {brand?.name}.
+              Persistent audience observations and performance patterns recorded for {brand?.name}.
             </p>
           </div>
 
@@ -233,7 +227,7 @@ export const MemoryCenter: React.FC<MemoryCenterProps> = ({ brand }) => {
                 type="text"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder="Recall query..."
+                placeholder="Filter saved insights..."
                 className="bg-[#080808] border border-[#202020] rounded-xl pl-8 pr-3 py-1.5 text-xs text-neutral-100 focus:border-neutral-500 outline-none w-48 sm:w-64 font-mono"
               />
             </div>
@@ -243,14 +237,14 @@ export const MemoryCenter: React.FC<MemoryCenterProps> = ({ brand }) => {
               className="bg-neutral-800 hover:bg-neutral-700 text-neutral-200 px-3 py-1.5 rounded-xl text-xs font-semibold flex items-center gap-1.5 border border-neutral-700 transition-all"
             >
               <RefreshCw className={`w-3.5 h-3.5 ${isLoading ? 'animate-spin' : ''}`} />
-              <span>Recall</span>
+              <span>Search</span>
             </button>
           </form>
         </div>
 
         {memories.length === 0 ? (
-          <div className="bg-[#101010] border border-[#252525] rounded-2xl p-8 text-center text-xs text-neutral-500">
-            No memories found matching this recall query.
+          <div className="bg-[#101010] border border-[#252525] rounded-2xl p-12 text-center text-xs text-neutral-400">
+            No channel insights have been saved yet.
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -263,3 +257,5 @@ export const MemoryCenter: React.FC<MemoryCenterProps> = ({ brand }) => {
     </div>
   );
 };
+
+export default MemoryCenter;

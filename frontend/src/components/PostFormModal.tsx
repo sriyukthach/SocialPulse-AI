@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { X, Sparkles, Send, Brain, Video } from 'lucide-react';
+import { X, Send, Video, Sparkles } from 'lucide-react';
 import { api } from '../api/client';
 import { Post } from '../types';
 
@@ -32,7 +32,7 @@ export const PostFormModal: React.FC<PostFormModalProps> = ({
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
-    setStatusMessage('Saving video metrics and persisting observations in Hindsight memory...');
+    setStatusMessage('Saving video metrics and viewer feedback...');
 
     try {
       const created = await api.createPost({
@@ -47,7 +47,7 @@ export const PostFormModal: React.FC<PostFormModalProps> = ({
         posted_date: postedDate,
       });
 
-      setStatusMessage('Retained in Hindsight successfully!');
+      setStatusMessage('Saved successfully!');
       setTimeout(() => {
         onPostCreated(created);
         onClose();
@@ -80,10 +80,10 @@ export const PostFormModal: React.FC<PostFormModalProps> = ({
           <div className="p-2 rounded-xl bg-neutral-900 border border-neutral-800 text-white">
             <Video className="w-4 h-4 text-white" />
           </div>
-          <h3 className="text-lg font-bold text-white tracking-tight">Add Video & Viewer Feedback</h3>
+          <h3 className="text-lg font-bold text-white tracking-tight">Add Video Data & Feedback</h3>
         </div>
         <p className="text-xs text-neutral-400 mb-6 leading-relaxed">
-          Public YouTube video metrics and viewer comments will be automatically analyzed and retained in Hindsight for persistent channel learning.
+          Record public YouTube video metrics and viewer comments for channel analysis.
         </p>
 
         <form onSubmit={handleSubmit} className="space-y-4">
@@ -95,7 +95,7 @@ export const PostFormModal: React.FC<PostFormModalProps> = ({
                 required
                 value={topic}
                 onChange={(e) => setTopic(e.target.value)}
-                placeholder="e.g., Ultimate M3 Max Laptop Thermal Throttle Test"
+                placeholder="e.g., Laptop Thermal Test Breakdown"
                 className="w-full bg-[#080808] border border-[#202020] rounded-xl px-3.5 py-2.5 text-xs text-neutral-100 placeholder-neutral-500 focus:border-neutral-500 outline-none"
               />
             </div>
@@ -116,13 +116,13 @@ export const PostFormModal: React.FC<PostFormModalProps> = ({
           </div>
 
           <div>
-            <label className="block text-xs font-semibold text-neutral-300 mb-1.5">Video Description / Summary</label>
+            <label className="block text-xs font-semibold text-neutral-300 mb-1.5">Video Description</label>
             <textarea
               required
               rows={2}
               value={caption}
               onChange={(e) => setCaption(e.target.value)}
-              placeholder="Enter the main description or key takeaway of the video..."
+              placeholder="Enter the video description or main takeaway..."
               className="w-full bg-[#080808] border border-[#202020] rounded-xl px-3.5 py-2.5 text-xs text-neutral-100 placeholder-neutral-500 focus:border-neutral-500 outline-none resize-none"
             />
           </div>
@@ -130,7 +130,7 @@ export const PostFormModal: React.FC<PostFormModalProps> = ({
           {/* Metrics Row */}
           <div className="grid grid-cols-3 gap-3 bg-[#080808] p-3.5 rounded-2xl border border-[#202020]">
             <div>
-              <label className="block text-[11px] font-semibold text-neutral-400 mb-1">Public Views</label>
+              <label className="block text-[11px] font-semibold text-neutral-400 mb-1">Views</label>
               <input
                 type="number"
                 min="0"
@@ -166,18 +166,18 @@ export const PostFormModal: React.FC<PostFormModalProps> = ({
           <div>
             <div className="flex items-center justify-between mb-1.5">
               <label className="block text-xs font-semibold text-neutral-300">
-                Viewer Comments & Feedback
+                Viewer Feedback & Comments
               </label>
               <span className="text-[10px] text-neutral-400 font-mono flex items-center gap-1">
-                <Brain className="w-3 h-3 text-neutral-400" />
-                Retained into Hindsight
+                <Sparkles className="w-3 h-3 text-neutral-400" />
+                Saved for analysis
               </span>
             </div>
             <textarea
               rows={2}
               value={audienceFeedback}
               onChange={(e) => setAudienceFeedback(e.target.value)}
-              placeholder="e.g., Top Comments: 'Please do a battery drain test after 6 months!', 'Timestamps saved so much time!'"
+              placeholder="e.g., Top Comments: 'Please do a battery drain test!', 'Timestamps saved so much time!'"
               className="w-full bg-[#080808] border border-[#202020] rounded-xl px-3.5 py-2.5 text-xs text-neutral-100 placeholder-neutral-500 focus:border-neutral-500 outline-none resize-none"
             />
           </div>
@@ -198,10 +198,10 @@ export const PostFormModal: React.FC<PostFormModalProps> = ({
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="flex items-center gap-2 bg-[#F5F5F5] hover:bg-white text-[#080808] px-4.5 py-2.5 rounded-xl text-xs font-bold transition-all disabled:opacity-50"
+                className="flex items-center gap-2 bg-white hover:bg-neutral-200 text-black px-4.5 py-2.5 rounded-xl text-xs font-extrabold transition-all disabled:opacity-50"
               >
                 <Send className="w-3.5 h-3.5" />
-                <span>{isSubmitting ? 'Retaining in Memory...' : 'Save & Retain Video'}</span>
+                <span>{isSubmitting ? 'Saving...' : 'Save Video Data'}</span>
               </button>
             </div>
           </div>
@@ -217,3 +217,4 @@ export const PostFormModal: React.FC<PostFormModalProps> = ({
   );
 };
 
+export default PostFormModal;

@@ -81,6 +81,14 @@ export interface ComparativeInsight {
   agent_takeaway: string;
 }
 
+export interface ContentRecommendation {
+  title: string;
+  category: 'Topics to Explore' | 'Formats to Consider' | 'Audience Questions to Answer' | 'What to Avoid' | 'Next Video Idea' | string;
+  recommendation: string;
+  why: string;
+  evidence: string;
+}
+
 export interface EngagementAnalysisResponse {
   brand_id: number;
   brand_name: string;
@@ -92,6 +100,7 @@ export interface EngagementAnalysisResponse {
   recurring_questions: RecurringFeedbackTheme[];
   sentiment_evolution: SentimentEvolution;
   comparative_insights: ComparativeInsight[];
+  recommendations?: ContentRecommendation[];
   recalled_memories: RecalledMemoryItem[];
   model_used: string;
   memory_bank_id: string;
