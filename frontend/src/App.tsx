@@ -9,7 +9,7 @@ import { PostHistory } from './pages/PostHistory';
 import { EngagementAnalysis } from './pages/EngagementAnalysis';
 import { MemoryCenter } from './pages/MemoryCenter';
 
-const Hyperspeed = React.lazy(() => import('./components/Hyperspeed'));
+const Hyperspeed = React.lazy(() => import('./components/HyperspeedSafe'));
 
 const hyperspeedOptions = {
   distortion: 'turbulentDistortion',
