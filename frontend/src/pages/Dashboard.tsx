@@ -75,7 +75,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
           <div className="flex flex-col sm:flex-row lg:flex-col xl:flex-row gap-3 shrink-0">
             <button
               onClick={onNavigateToAnalysis}
-              className="flex items-center justify-center gap-2 bg-white hover:bg-neutral-200 text-black font-extrabold px-5.5 py-3 rounded-xl text-xs sm:text-sm transition-all whitespace-nowrap active:scale-95 shadow-sm"
+              className="flex items-center justify-center gap-2 bg-white hover:bg-neutral-200 text-black font-extrabold px-5 py-3 rounded-xl text-xs sm:text-sm transition-all whitespace-nowrap active:scale-95 shadow-sm"
             >
               <BarChart3 className="w-4 h-4 text-black" />
               <span>View Insights</span>
@@ -83,7 +83,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
 
             <button
               onClick={onOpenPostModal}
-              className="flex items-center justify-center gap-2 bg-[#141414] border border-[#262626] hover:bg-neutral-800 text-neutral-200 font-semibold px-4.5 py-3 rounded-xl text-xs sm:text-sm transition-all whitespace-nowrap"
+              className="flex items-center justify-center gap-2 bg-[#141414] border border-[#262626] hover:bg-neutral-800 text-neutral-200 font-semibold px-4 py-3 rounded-xl text-xs sm:text-sm transition-all whitespace-nowrap"
             >
               <Video className="w-4 h-4 text-neutral-400" />
               <span>Add Video Data</span>
@@ -189,7 +189,9 @@ export const Dashboard: React.FC<DashboardProps> = ({
               Viewer Feedback Patterns
             </div>
             <p className="text-xs text-neutral-300 leading-relaxed">
-              Audience actively asks technical follow-up questions and timestamp requests across recent comment sections.
+              {stats.total_comments > 0
+                ? `${formatViews(stats.total_comments)} public comments analyzed across ${stats.total_posts} videos. Viewer interaction signals have been saved to channel memory.`
+                : `No public comment data found yet. Add video data or analyze more content to detect viewer feedback patterns.`}
             </p>
           </div>
         </div>
@@ -241,7 +243,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
           <div className="space-y-1 max-w-3xl">
             <h3 className="text-sm font-bold text-white">Channel Insights Saved for @{brand.slug}</h3>
             <p className="text-xs text-neutral-400 leading-relaxed">
-              SocialPulse stores persistent facts about this channel's audience preferences. Long-form video breakdowns with explicit timestamps and direct benchmarks generate higher comment depth than short teaser announcements.
+              SocialPulse stores persistent observations about {brand.name}'s audience and video performance patterns. These memories are recalled automatically to improve future content analysis.
             </p>
           </div>
 

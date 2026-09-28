@@ -198,7 +198,7 @@ export const PostFormModal: React.FC<PostFormModalProps> = ({
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="flex items-center gap-2 bg-white hover:bg-neutral-200 text-black px-4.5 py-2.5 rounded-xl text-xs font-extrabold transition-all disabled:opacity-50"
+                className="flex items-center gap-2 bg-white hover:bg-neutral-200 text-black px-4 py-2.5 rounded-xl text-xs font-extrabold transition-all disabled:opacity-50"
               >
                 <Send className="w-3.5 h-3.5" />
                 <span>{isSubmitting ? 'Saving...' : 'Save Video Data'}</span>

@@ -56,7 +56,7 @@ export const PostHistory: React.FC<PostHistoryProps> = ({
 
         <button
           onClick={onOpenPostModal}
-          className="flex items-center justify-center gap-2 bg-white hover:bg-neutral-200 text-black font-extrabold px-4.5 py-2.5 rounded-xl text-xs transition-all shrink-0 shadow-sm"
+          className="flex items-center justify-center gap-2 bg-white hover:bg-neutral-200 text-black font-extrabold px-4 py-2.5 rounded-xl text-xs transition-all shrink-0 shadow-sm"
         >
           <PlusCircle className="w-4 h-4 text-black" />
           <span>Add Video Data</span>

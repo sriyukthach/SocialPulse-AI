@@ -329,7 +329,26 @@ export const EngagementAnalysis: React.FC<EngagementAnalysisProps> = ({ brand })
             </div>
           </div>
         </div>
-      ) : null}
+      ) : (
+        /* Empty / idle state — analysis hasn't run yet */
+        <div className="flex flex-col items-center justify-center min-h-[300px] gap-4 text-center bg-[#101010] border border-[#252525] rounded-3xl p-10">
+          <BarChart3 className="w-8 h-8 text-neutral-600" />
+          <div>
+            <h3 className="text-sm font-semibold text-neutral-200 mb-1">No Analysis Available</h3>
+            <p className="text-xs text-neutral-500 max-w-sm mx-auto leading-relaxed">
+              Click <strong className="text-neutral-300">Refresh Intelligence</strong> above to generate a full channel performance analysis using saved memories and video data.
+            </p>
+          </div>
+          <button
+            onClick={() => fetchAnalysis(focusQuery)}
+            disabled={isLoading}
+            className="flex items-center gap-2 bg-white hover:bg-neutral-200 text-black px-5 py-2.5 rounded-xl text-xs font-extrabold transition-all disabled:opacity-50"
+          >
+            <RefreshCw className="w-4 h-4" />
+            Generate Analysis
+          </button>
+        </div>
+      )}
     </div>
   );
 };
