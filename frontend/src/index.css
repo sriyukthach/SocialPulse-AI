@@ -51,3 +51,10 @@ body {
   outline-offset: 2px;
   border-radius: 8px;
 }
+
+/* ─── Hyperspeed Canvas ─── */
+#lights canvas {
+  width: 100% !important;
+  height: 100% !important;
+  display: block;
+}
