@@ -1,5 +1,5 @@
 import React from 'react';
-import { Heart, MessageSquare, Share2, Calendar, Brain, Sparkles } from 'lucide-react';
+import { Heart, MessageSquare, Eye, Calendar, Brain, Sparkles, Video } from 'lucide-react';
 import { Post } from '../types';
 
 interface PostCardProps {
@@ -7,12 +7,19 @@ interface PostCardProps {
 }
 
 export const PostCard: React.FC<PostCardProps> = ({ post }) => {
+  const formatViews = (num: number) => {
+    if (num >= 1_000_000) return `${(num / 1_000_000).toFixed(1)}M views`;
+    if (num >= 1_000) return `${(num / 1_000).toFixed(0)}K views`;
+    return `${num} views`;
+  };
+
   return (
     <div className="bg-[#101010] border border-[#252525] hover:border-[#3A3A3A] rounded-2xl p-5 transition-all duration-200 flex flex-col justify-between shadow-sm">
       <div>
         {/* Header: Format Badge & Hindsight Memory Badge */}
         <div className="flex items-center justify-between gap-2 mb-3 flex-wrap">
-          <span className="text-[11px] font-mono font-medium px-2.5 py-0.5 rounded-md bg-neutral-900 text-neutral-300 border border-neutral-800">
+          <span className="text-[11px] font-mono font-medium px-2.5 py-0.5 rounded-md bg-neutral-900 text-neutral-300 border border-neutral-800 flex items-center gap-1">
+            <Video className="w-3 h-3 text-neutral-400" />
             {post.format}
           </span>
           <div className="flex items-center gap-2">
@@ -31,7 +38,7 @@ export const PostCard: React.FC<PostCardProps> = ({ post }) => {
           </div>
         </div>
 
-        {/* Topic & Caption */}
+        {/* Video Title / Topic & Description / Caption */}
         <h4 className="text-base font-bold text-white mb-2 leading-snug">{post.topic}</h4>
         <p className="text-xs text-neutral-300 mb-4 bg-[#080808] p-3 rounded-xl border border-[#202020] leading-relaxed font-normal">
           "{post.caption}"
@@ -42,7 +49,7 @@ export const PostCard: React.FC<PostCardProps> = ({ post }) => {
           <div className="mb-4 bg-[#0D0D0D] border border-[#222222] rounded-xl p-3">
             <div className="flex items-center gap-1.5 text-xs font-semibold text-neutral-300 mb-1">
               <Sparkles className="w-3.5 h-3.5 text-neutral-400 shrink-0" />
-              Audience Feedback & Sentiment:
+              Viewer Feedback & Comments:
             </div>
             <p className="text-xs text-neutral-400 leading-relaxed italic">
               "{post.audience_feedback}"
@@ -51,20 +58,20 @@ export const PostCard: React.FC<PostCardProps> = ({ post }) => {
         )}
       </div>
 
-      {/* Engagement Footer — Monochrome Metrics */}
+      {/* Engagement Footer — YouTube Metrics */}
       <div className="pt-3 border-t border-[#202020] flex items-center justify-between text-xs text-neutral-400 font-mono">
-        <div className="flex items-center gap-4">
-          <span className="flex items-center gap-1.5 text-neutral-300" title="Likes">
+        <div className="flex items-center gap-3.5">
+          <span className="flex items-center gap-1 text-neutral-300 font-semibold" title="Public YouTube Views">
+            <Eye className="w-3.5 h-3.5 text-neutral-400" />
+            {formatViews(post.shares_count)}
+          </span>
+          <span className="flex items-center gap-1 text-neutral-300" title="Likes">
             <Heart className="w-3.5 h-3.5 text-neutral-400" />
-            {post.likes}
+            {post.likes >= 1000 ? `${(post.likes / 1000).toFixed(1)}k` : post.likes}
           </span>
-          <span className="flex items-center gap-1.5 text-neutral-300" title="Comments">
+          <span className="flex items-center gap-1 text-neutral-300" title="Comments">
             <MessageSquare className="w-3.5 h-3.5 text-neutral-400" />
-            {post.comments_count}
-          </span>
-          <span className="flex items-center gap-1.5 text-neutral-300" title="Shares / Saves">
-            <Share2 className="w-3.5 h-3.5 text-neutral-400" />
-            {post.shares_count}
+            {post.comments_count >= 1000 ? `${(post.comments_count / 1000).toFixed(1)}k` : post.comments_count}
           </span>
         </div>
 
@@ -77,3 +84,4 @@ export const PostCard: React.FC<PostCardProps> = ({ post }) => {
     </div>
   );
 };
+

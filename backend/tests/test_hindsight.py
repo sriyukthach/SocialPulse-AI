@@ -36,12 +36,12 @@ def test_hindsight_workflow():
         api_key=api_key if api_key else None
     )
 
-    test_bank_id = f"test-glownest-{str(uuid.uuid4())[:8]}"
+    test_bank_id = f"test-yt-channel-{str(uuid.uuid4())[:8]}"
     print(f"[*] Creating & Testing Memory Bank: {test_bank_id}")
 
     test_content = (
-        "GlowNest Skincare Audience Insight: Morning skincare routine carousels achieved a 4.8% engagement rate, "
-        "with audience comments frequently requesting oily-skin routines and affordable ingredient alternatives."
+        "YouTube Channel Audience Insight: Deep-dive laptop tech reviews with explicit timestamps achieved 450,000 views, "
+        "with viewer comments frequently requesting side-by-side battery drain comparisons."
     )
 
     print("\n--- Step 1: Retaining Memory (Session 1) ---")
@@ -49,7 +49,7 @@ def test_hindsight_workflow():
         retain_res = client_session_1.retain(
             bank_id=test_bank_id,
             content=test_content,
-            context="Brand: GlowNest | Platform: Instagram | Metric: High Engagement"
+            context="YouTube Channel: @mkbhd | Metric: High Watch Duration"
         )
         print(f"[+] Memory successfully retained! Response: {retain_res}")
     except Exception as e:

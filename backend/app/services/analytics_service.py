@@ -2,9 +2,12 @@ from typing import List, Dict, Any
 from app.models.post import Post
 
 def calculate_post_engagement_rate(post: Post) -> float:
-    # Benchmark engagement index: (Likes + Comments*2 + Shares*3) / 100
-    score = post.likes + (post.comments_count * 2) + (post.shares_count * 3)
-    return round(score / 100.0, 2)
+    # YouTube Engagement Rate formula: ((Likes + Comments) / Views) * 100
+    views = post.shares_count if post.shares_count and post.shares_count > 0 else 0
+    if views <= 0:
+        return 0.0
+    er = ((post.likes + post.comments_count) / float(views)) * 100.0
+    return round(er, 2)
 
 def compute_brand_stats(posts: List[Post]) -> Dict[str, Any]:
     if not posts:

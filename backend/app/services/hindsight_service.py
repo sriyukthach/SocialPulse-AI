@@ -96,6 +96,27 @@ class HindsightService:
             logger.error(f"Error recalling memories from Hindsight: {e}")
             return []
 
+    def retain_memory(self, brand_slug: str, insight_text: str, context: str = "") -> Dict[str, Any]:
+        """
+        Retains a raw text insight/observation in Hindsight memory bank.
+        Executes in worker thread with fallback error handling.
+        """
+        def _run():
+            client = self._get_client()
+            res = client.retain(
+                bank_id=brand_slug,
+                content=insight_text,
+                context=context or "YouTube Data Intelligence"
+            )
+            return {"success": True, "bank_id": brand_slug, "response": str(res)}
+
+        try:
+            future = self._executor.submit(_run)
+            return future.result(timeout=15.0)
+        except Exception as e:
+            logger.error(f"Error retaining insight memory in Hindsight: {e}")
+            return {"success": False, "error": str(e)}
+
     def reflect(self, brand_slug: str, query: str) -> Optional[str]:
         """
         Runs Hindsight reflection over accumulated memories in a worker thread.

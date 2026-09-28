@@ -3,11 +3,11 @@ from pydantic import BaseModel, Field
 from typing import Optional
 
 class BrandBase(BaseModel):
-    name: str = Field(..., example="GlowNest Skincare")
-    slug: str = Field(..., example="glownest")
-    industry: str = Field(..., example="Skincare & Beauty")
-    audience_description: str = Field(..., example="Young adults (18-30) focused on clean, affordable skincare and acne-prone routines.")
-    content_goal: str = Field(..., example="Increase authentic community engagement and drive educational saves/shares.")
+    name: str = Field(..., example="Marques Brownlee (@mkbhd)")
+    slug: str = Field(..., example="mkbhd")
+    industry: str = Field(..., example="YouTube Tech & Media")
+    audience_description: str = Field(..., example="Tech enthusiasts, power users, and gadget buyers seeking deep-dive hardware reviews.")
+    content_goal: str = Field(..., example="Deliver high-production video breakdowns and honest benchmark comparisons.")
 
 class BrandCreate(BrandBase):
     pass

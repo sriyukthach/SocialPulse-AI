@@ -15,10 +15,11 @@ class Settings(BaseSettings):
     GEMINI_API_KEY: str = ""
     HINDSIGHT_BASE_URL: str = "https://api.hindsight.vectorize.io"
     HINDSIGHT_API_KEY: str = ""
+    YOUTUBE_API_KEY: str = ""
     DATABASE_URL: str = f"sqlite:///{BASE_DIR}/socialpulse.db"
     ENVIRONMENT: str = "development"
     PORT: int = 8000
-    GEMINI_MODEL: str = "gemini-2.5-flash"
+    GEMINI_MODEL: str = "gemini-2.0-flash"
 
     class Config:
         env_file = BASE_DIR / ".env"

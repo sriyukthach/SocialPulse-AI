@@ -50,12 +50,12 @@ def retain_manual_insight(req: RetainInsightRequest, db: Session = Depends(get_d
     if not brand:
         raise HTTPException(status_code=404, detail="Brand not found")
 
-    res = hindsight_service.client.retain(
-        bank_id=brand.slug,
-        content=req.insight_text,
-        context=req.context
+    res = hindsight_service.retain_memory(
+        brand_slug=brand.slug,
+        insight_text=req.insight_text,
+        context=req.context or "Manual audience feedback entry"
     )
-    return {"success": True, "bank_id": brand.slug, "response": str(res)}
+    return {"success": res.get("success", True), "bank_id": brand.slug, "response": str(res)}
 
 @router.post("/reflect")
 def reflect_on_memories(req: ReflectRequest, db: Session = Depends(get_db)):

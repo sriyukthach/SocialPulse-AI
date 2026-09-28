@@ -56,14 +56,14 @@ export const EngagementAnalysis: React.FC<EngagementAnalysisProps> = ({ brand })
                 <BarChart3 className="w-4 h-4" />
               </div>
               <span className="text-[10px] font-mono font-semibold text-neutral-400 uppercase tracking-[0.15em]">
-                MEMORY-POWERED ENGAGEMENT INTELLIGENCE
+                MEMORY-POWERED CHANNEL INTELLIGENCE
               </span>
             </div>
             <h1 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
-              Agent Engagement Intelligence
+              YouTube Engagement Intelligence
             </h1>
             <p className="text-xs sm:text-sm text-neutral-400 leading-relaxed">
-              Synthesizing historical post metrics, audience comments, and community sentiment retained in <strong className="text-white">{brand?.name}</strong>'s Hindsight memory bank (<span className="text-neutral-300 font-mono">"{brand?.slug}"</span>).
+              Synthesizing historical public video metrics, viewer comments, and community sentiment retained in <strong className="text-white">{brand?.name}</strong>'s Hindsight memory bank (<span className="text-neutral-300 font-mono">"{brand?.slug}"</span>).
             </p>
           </div>
 
@@ -83,7 +83,7 @@ export const EngagementAnalysis: React.FC<EngagementAnalysisProps> = ({ brand })
         <div className="hidden sm:flex items-center justify-between bg-[#080808] p-3 rounded-2xl border border-[#202020] text-[10px] font-mono text-neutral-400 mb-4">
           <span className="flex items-center gap-1.5 text-neutral-300 font-semibold">
             <span className="h-5 w-5 rounded-full bg-neutral-900 text-white flex items-center justify-center text-[10px]">1</span>
-            Past Post Metrics
+            Public Video Data
           </span>
           <ArrowRight className="w-3.5 h-3.5 text-neutral-600" />
           <span className="flex items-center gap-1.5 text-neutral-300 font-semibold">
@@ -98,7 +98,7 @@ export const EngagementAnalysis: React.FC<EngagementAnalysisProps> = ({ brand })
           <ArrowRight className="w-3.5 h-3.5 text-neutral-600" />
           <span className="flex items-center gap-1.5 text-white font-semibold">
             <span className="h-5 w-5 rounded-full bg-white text-black flex items-center justify-center text-[10px] font-bold">4</span>
-            What Agent Learned
+            Learned Intelligence
           </span>
         </div>
 
@@ -110,7 +110,7 @@ export const EngagementAnalysis: React.FC<EngagementAnalysisProps> = ({ brand })
               type="text"
               value={focusQuery}
               onChange={(e) => setFocusQuery(e.target.value)}
-              placeholder={`Focus agent analysis on specific topics for ${brand?.name} (e.g., cleansers, sizing, serum feedback)...`}
+              placeholder={`Focus agent analysis on specific topics for ${brand?.name} (e.g., battery tests, thermal benchmarks, camera shootout)...`}
               className="w-full bg-[#121212] border border-[#252525] rounded-xl pl-9 pr-4 py-2 text-xs text-neutral-100 placeholder-neutral-500 focus:border-neutral-500 outline-none"
             />
           </div>

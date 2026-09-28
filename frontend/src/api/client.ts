@@ -20,6 +20,13 @@ export const api = {
     return res.data;
   },
 
+  analyzeChannel: async (channelUrlOrHandle: string): Promise<BrandDashboardStats> => {
+    const res = await axios.post(`${API_BASE}/brands/analyze_channel`, {
+      channel_url_or_handle: channelUrlOrHandle
+    });
+    return res.data;
+  },
+
   // Posts
   getPosts: async (brandId?: number): Promise<Post[]> => {
     const params = brandId ? { brand_id: brandId } : {};

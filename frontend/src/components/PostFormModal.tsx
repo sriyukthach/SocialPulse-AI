@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { X, Sparkles, Send, Brain } from 'lucide-react';
+import { X, Sparkles, Send, Brain, Video } from 'lucide-react';
 import { api } from '../api/client';
 import { Post } from '../types';
 
@@ -17,11 +17,11 @@ export const PostFormModal: React.FC<PostFormModalProps> = ({
   onPostCreated,
 }) => {
   const [topic, setTopic] = useState('');
-  const [format, setFormat] = useState('Carousel');
+  const [format, setFormat] = useState('Long-form Review');
   const [caption, setCaption] = useState('');
-  const [likes, setLikes] = useState<number>(150);
-  const [commentsCount, setCommentsCount] = useState<number>(24);
-  const [sharesCount, setSharesCount] = useState<number>(35);
+  const [likes, setLikes] = useState<number>(12500);
+  const [commentsCount, setCommentsCount] = useState<number>(1850);
+  const [sharesCount, setSharesCount] = useState<number>(450000); // Mapped to YouTube Views
   const [audienceFeedback, setAudienceFeedback] = useState('');
   const [postedDate, setPostedDate] = useState(new Date().toISOString().split('T')[0]);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -32,7 +32,7 @@ export const PostFormModal: React.FC<PostFormModalProps> = ({
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
-    setStatusMessage('Saving post and persisting insights in Hindsight memory...');
+    setStatusMessage('Saving video metrics and persisting observations in Hindsight memory...');
 
     try {
       const created = await api.createPost({
@@ -59,7 +59,7 @@ export const PostFormModal: React.FC<PostFormModalProps> = ({
       }, 700);
     } catch (err: any) {
       console.error(err);
-      setStatusMessage('Error saving post: ' + (err.response?.data?.detail || err.message));
+      setStatusMessage('Error saving video data: ' + (err.response?.data?.detail || err.message));
     } finally {
       setIsSubmitting(false);
     }
@@ -78,57 +78,68 @@ export const PostFormModal: React.FC<PostFormModalProps> = ({
 
         <div className="flex items-center gap-2.5 mb-1">
           <div className="p-2 rounded-xl bg-neutral-900 border border-neutral-800 text-white">
-            <Sparkles className="w-4 h-4" />
+            <Video className="w-4 h-4 text-white" />
           </div>
-          <h3 className="text-lg font-bold text-white tracking-tight">Add Post & Engagement Feedback</h3>
+          <h3 className="text-lg font-bold text-white tracking-tight">Add Video & Viewer Feedback</h3>
         </div>
         <p className="text-xs text-neutral-400 mb-6 leading-relaxed">
-          New post performance and audience reactions will be automatically analyzed and retained in Hindsight for future recommendation reasoning.
+          Public YouTube video metrics and viewer comments will be automatically analyzed and retained in Hindsight for persistent channel learning.
         </p>
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-semibold text-neutral-300 mb-1.5">Post Topic / Theme</label>
+              <label className="block text-xs font-semibold text-neutral-300 mb-1.5">Video Title / Topic</label>
               <input
                 type="text"
                 required
                 value={topic}
                 onChange={(e) => setTopic(e.target.value)}
-                placeholder="e.g., Hydrating Barrier Serum Review"
+                placeholder="e.g., Ultimate M3 Max Laptop Thermal Throttle Test"
                 className="w-full bg-[#080808] border border-[#202020] rounded-xl px-3.5 py-2.5 text-xs text-neutral-100 placeholder-neutral-500 focus:border-neutral-500 outline-none"
               />
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-neutral-300 mb-1.5">Content Format</label>
+              <label className="block text-xs font-semibold text-neutral-300 mb-1.5">Video Format</label>
               <select
                 value={format}
                 onChange={(e) => setFormat(e.target.value)}
-                className="w-full bg-[#080808] border border-[#202020] rounded-xl px-3.5 py-2.5 text-xs text-neutral-100 focus:border-neutral-500 outline-none"
+                className="w-full bg-[#080808] border border-[#202020] rounded-xl px-3.5 py-2.5 text-xs text-neutral-100 focus:border-neutral-500 outline-none font-mono"
               >
-                <option value="Carousel">Carousel (Multi-slide breakdown)</option>
-                <option value="Video Reel">Video Reel (Short video)</option>
-                <option value="Static Image">Static Image (Single photo/graphic)</option>
-                <option value="Story/Thread">Story / Discussion Thread</option>
+                <option value="Long-form Review">Long-form Review (Full breakdown)</option>
+                <option value="YouTube Short">YouTube Short (60s Vertical)</option>
+                <option value="Deep Dive Essay">Deep Dive Essay / Documentary</option>
+                <option value="Hands-on Tutorial">Hands-on Tutorial / Guide</option>
               </select>
             </div>
           </div>
 
           <div>
-            <label className="block text-xs font-semibold text-neutral-300 mb-1.5">Caption</label>
+            <label className="block text-xs font-semibold text-neutral-300 mb-1.5">Video Description / Summary</label>
             <textarea
               required
               rows={2}
               value={caption}
               onChange={(e) => setCaption(e.target.value)}
-              placeholder="Enter the caption used on the post..."
+              placeholder="Enter the main description or key takeaway of the video..."
               className="w-full bg-[#080808] border border-[#202020] rounded-xl px-3.5 py-2.5 text-xs text-neutral-100 placeholder-neutral-500 focus:border-neutral-500 outline-none resize-none"
             />
           </div>
 
           {/* Metrics Row */}
           <div className="grid grid-cols-3 gap-3 bg-[#080808] p-3.5 rounded-2xl border border-[#202020]">
+            <div>
+              <label className="block text-[11px] font-semibold text-neutral-400 mb-1">Public Views</label>
+              <input
+                type="number"
+                min="0"
+                value={sharesCount}
+                onChange={(e) => setSharesCount(Number(e.target.value))}
+                placeholder="450000"
+                className="w-full bg-[#121212] border border-[#252525] rounded-xl px-2.5 py-2 text-xs text-white outline-none focus:border-neutral-500 font-mono"
+              />
+            </div>
             <div>
               <label className="block text-[11px] font-semibold text-neutral-400 mb-1">Likes</label>
               <input
@@ -149,23 +160,13 @@ export const PostFormModal: React.FC<PostFormModalProps> = ({
                 className="w-full bg-[#121212] border border-[#252525] rounded-xl px-2.5 py-2 text-xs text-white outline-none focus:border-neutral-500 font-mono"
               />
             </div>
-            <div>
-              <label className="block text-[11px] font-semibold text-neutral-400 mb-1">Shares / Saves</label>
-              <input
-                type="number"
-                min="0"
-                value={sharesCount}
-                onChange={(e) => setSharesCount(Number(e.target.value))}
-                className="w-full bg-[#121212] border border-[#252525] rounded-xl px-2.5 py-2 text-xs text-white outline-none focus:border-neutral-500 font-mono"
-              />
-            </div>
           </div>
 
-          {/* Audience Feedback */}
+          {/* Viewer Feedback */}
           <div>
             <div className="flex items-center justify-between mb-1.5">
               <label className="block text-xs font-semibold text-neutral-300">
-                Audience Feedback, Questions & Comments
+                Viewer Comments & Feedback
               </label>
               <span className="text-[10px] text-neutral-400 font-mono flex items-center gap-1">
                 <Brain className="w-3 h-3 text-neutral-400" />
@@ -176,7 +177,7 @@ export const PostFormModal: React.FC<PostFormModalProps> = ({
               rows={2}
               value={audienceFeedback}
               onChange={(e) => setAudienceFeedback(e.target.value)}
-              placeholder="e.g. Comments: 'Can you show how this works under sunscreen?', 'Does this clog pores for fungal acne?'"
+              placeholder="e.g., Top Comments: 'Please do a battery drain test after 6 months!', 'Timestamps saved so much time!'"
               className="w-full bg-[#080808] border border-[#202020] rounded-xl px-3.5 py-2.5 text-xs text-neutral-100 placeholder-neutral-500 focus:border-neutral-500 outline-none resize-none"
             />
           </div>
@@ -200,7 +201,7 @@ export const PostFormModal: React.FC<PostFormModalProps> = ({
                 className="flex items-center gap-2 bg-[#F5F5F5] hover:bg-white text-[#080808] px-4.5 py-2.5 rounded-xl text-xs font-bold transition-all disabled:opacity-50"
               >
                 <Send className="w-3.5 h-3.5" />
-                <span>{isSubmitting ? 'Retaining in Memory...' : 'Save & Retain Post'}</span>
+                <span>{isSubmitting ? 'Retaining in Memory...' : 'Save & Retain Video'}</span>
               </button>
             </div>
           </div>
@@ -215,3 +216,4 @@ export const PostFormModal: React.FC<PostFormModalProps> = ({
     </div>
   );
 };
+

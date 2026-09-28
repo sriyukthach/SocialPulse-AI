@@ -133,7 +133,7 @@ export const MemoryCenter: React.FC<MemoryCenterProps> = ({ brand }) => {
               </span>
             </div>
             <p className="text-xs text-neutral-400 leading-relaxed mb-4">
-              Record direct feedback from DMs, customer tickets, or live Q&A. Hindsight will extract facts and integrate them into future recommendation context.
+              Record viewer observations, live Q&A comments, or community feedback. Hindsight will extract facts and integrate them into future channel recommendation context.
             </p>
 
             <form onSubmit={handleRetainInsight} className="space-y-3">
@@ -142,7 +142,7 @@ export const MemoryCenter: React.FC<MemoryCenterProps> = ({ brand }) => {
                 rows={3}
                 value={newInsightText}
                 onChange={(e) => setNewInsightText(e.target.value)}
-                placeholder="e.g., Community feedback from live Q&A: 70% of viewers struggle with finding sunscreens that don't leave a white cast or sting eyes."
+                placeholder="e.g., Viewer feedback from live livestream Q&A: 80% of subscribers requested side-by-side battery drain tests and timestamps in tech reviews."
                 className="w-full bg-[#080808] border border-[#202020] rounded-xl p-3 text-xs text-neutral-100 placeholder-neutral-500 focus:border-neutral-500 outline-none resize-none"
               />
 
