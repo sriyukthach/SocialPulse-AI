@@ -1,12 +1,23 @@
+# Environment / secrets
 .env
-backend/.env
-frontend/.env
-*.pyc
+.env.*
+!.env.example
+
+# Python
 __pycache__/
-.venv/
-backend/.venv/
-node_modules/
-dist/
+*.py[cod]
 *.db
-.DS_Store
-SocialPulse-AI/
+
+# Node
+node_modules/
+
+# Build
+dist/
+build/
+
+# IDE
+.vscode/
+.idea/
+
+# Logs
+*.log
